@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Strength & Grace">
+<title>Strength & Grace</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body { background: #0F0F0F; color: #F0EBE5; font-family: Georgia, serif; max-width: 480px; margin: 0 auto; padding-bottom: 120px; min-height: 100vh; }
+button { cursor: pointer; border: none; background: none; color: inherit; font-family: inherit; }
+.sans { font-family: -apple-system, system-ui, sans-serif; }
+.header { padding: 50px 24px 24px; border-bottom: 1px solid #2E2E2E; }
+.header-label { font-size: 11px; letter-spacing: 3px; color: #8A8078; text-transform: uppercase; margin-bottom: 8px; font-family: -apple-system, system-ui, sans-serif; }
+.header-title { font-size: 28px; font-weight: 300; color: #E8DDD0; line-height: 1.2; }
+.header-title em { color: #C4A882; font-style: italic; }
+.header-sub { font-size: 13px; color: #8A8078; margin-top: 8px; font-family: -apple-system, system-ui, sans-serif; }
+.nav { display: flex; background: #1A1A1A; border-bottom: 1px solid #2E2E2E; position: sticky; top: 0; z-index: 10; }
+.nav-btn { flex: 1; padding: 12px 2px; font-size: 10px; letter-spacing: 0.3px; color: #8A8078; border-bottom: 2px solid transparent; transition: color 0.2s; font-family: -apple-system, system-ui, sans-serif; }
+.nav-btn.active { color: #E8DDD0; border-bottom-color: #C4A882; }
+.view { display: none; }
+.view.active { display: block; }
+.day-selector { display: flex; gap: 8px; padding: 20px 24px 16px; }
+.day-btn { flex: 1; padding: 12px 4px; border-radius: 12px; border: 1px solid #2E2E2E; color: #8A8078; transition: all 0.2s; text-align: center; }
+.day-btn.active { background: #222; }
+.day-btn .day-emoji { font-size: 18px; margin-bottom: 4px; }
+.day-btn .day-name { font-size: 11px; font-weight: 600; font-family: -apple-system, system-ui, sans-serif; }
+.day-btn .day-sub { font-size: 9px; font-family: -apple-system, system-ui, sans-serif; margin-top: 2px; color: #5A5450; }
+.day-info { margin: 0 24px 16px; background: #222; border-radius: 16px; padding: 16px 20px; border: 1px solid #2E2E2E; display: flex; justify-content: space-between; align-items: center; }
+.day-info-loc { font-size: 12px; color: #8A8078; font-family: -apple-system, system-ui, sans-serif; margin-bottom: 4px; }
+.day-info-goal { font-size: 14px; font-family: -apple-system, system-ui, sans-serif; }
+.count-num { font-size: 24px; font-weight: 300; }
+.count-label { font-size: 10px; color: #8A8078; font-family: -apple-system, system-ui, sans-serif; }
+.blocks { padding: 0 24px; display: flex; flex-direction: column; gap: 10px; }
+.block { border-radius: 16px; overflow: hidden; border: 1px solid #2E2E2E; transition: all 0.2s; }
+.block.done { background: #1A2A1A !important; border-color: #3A5A3A !important; }
+.block-header { width: 100%; padding: 16px 20px; display: flex; align-items: center; gap: 12px; text-align: left; }
+.block-num { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; font-family: -apple-system, system-ui, sans-serif; flex-shrink: 0; }
+.block-info { flex: 1; }
+.block-type-label { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; font-family: -apple-system, system-ui, sans-serif; margin-bottom: 3px; }
+.block-title { font-size: 15px; color: #E8DDD0; }
+.block-focus { font-size: 11px; color: #8A8078; font-family: -apple-system, system-ui, sans-serif; margin-top: 2px; }
+.block-sets { text-align: right; margin-right: 8px; }
+.block-sets-num { font-size: 16px; font-weight: 300; }
+.block-sets-reps { font-size: 10px; color: #8A8078; font-family: -apple-system, system-ui, sans-serif; }
+.block-arrow { color: #5A5450; font-size: 12px; transition: transform 0.2s; flex-shrink: 0; }
+.block-arrow.open { transform: rotate(180deg); }
+.block-body { display: none; padding: 0 20px 20px; border-top: 1px solid #2E2E2E; }
+.block-body.open { display: block; }
+.stats-row { display: flex; gap: 8px; margin: 16px 0; }
+.stat-box { flex: 1; border-radius: 10px; padding: 10px; text-align: center; }
+.stat-val { font-size: 15px; font-weight: 300; }
+.stat-label { font-size: 9px; color: #8A8078; font-family: -apple-system, system-ui, sans-serif; letter-spacing: 1px; text-transform: uppercase; margin-top: 2px; }
+.howto-toggle { width: 100%; padding: 11px 14px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.howto-toggle-title { font-size: 13px; color: #E8DDD0; font-family: -apple-system, system-ui, sans-serif; }
+.howto-toggle-label { font-size: 9px; font-family: -apple-system, system-ui, sans-serif; letter-spacing: 1px; }
+.howto-content { display: none; background: #1A1A1A; border-radius: 10px; padding: 12px 14px; border: 1px solid #2E2E2E; margin-bottom: 10px; }
+.howto-content.open { display: block; }
+.howto-heading { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; font-family: -apple-system, system-ui, sans-serif; margin-bottom: 8px; }
+.howto-text { font-size: 13px; color: #D0C8C0; font-family: -apple-system, system-ui, sans-serif; line-height: 1.65; margin-bottom: 10px; }
+.howto-tip { display: flex; gap: 8px; padding: 8px 10px; border-radius: 8px; }
+.howto-tip-text { font-size: 12px; color: #8A8078; font-family: -apple-system, system-ui, sans-serif; line-height: 1.5; }
+.ex-card { border-radius: 12px; border: 1px solid #2E2E2E; overflow: hidden; margin-bottom: 6px; }
+.ex-card-header { width: 100%; padding: 11px 14px; display: flex; justify-content: space-between; align-items: center; text-align: left; }
+.ex-name { font-size: 13px; color: #F0EBE5; font-family: -apple-system, system-ui, sans-serif; margin-bottom: 2px; }
+.ex-detail { font-size: 11px; color: #8A8078; font-family: -apple-system, system-ui, sans-serif; }
+.ex-wie { font-size: 9px; font-family: -apple-system, system-ui, sans-serif; letter-spacing: 1px; flex-shrink: 0; margin-left: 8px; }
+.ex-body { display: none; padding: 0 14px 14px; }
+.ex-body.open { display: block; }
+.ex-inner { background: #1A1A1A; border-radius: 10px; padding: 12px 14px; border: 1px solid #2E2E2E; }
+.done-btn { width: 100%; margin-top: 14px; padding: 12px; border-radius: 12px; font-size: 13px; font-family: -apple-system, system-ui, sans-serif; letter-spacing: 0.5px; transition: all 0.2s; }
+.section-pad { padding: 24px; }
+.section-eyebrow { font-size: 11px; letter-spacing: 3px; color: #8A8078; text-transform: uppercase; font-family: -apple-system, system-ui, sans-serif; margin-bottom: 8px; }
+.section-title { font-size: 22px; font-weight: 300; color: #E8DDD0; margin-bottom: 20px; }
+.section-title em { font-style: italic; color: #C4A882; }
+.card { background: #222; border: 1px solid #2E2E2E; border-radius: 16px; padding: 20px; margin-bottom: 12px; }
+.goal-card { display: flex; align-items: center; gap: 16px; }
+.goal-icon { width: 48px; height: 48px; border-radius: 50%; background: #C4A88215; border: 1px solid #C4A88230; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+.goal-label { font-size: 15px; color: #E8DDD0; margin-bottom: 4px; }
+.goal-sub { font-size: 12px; color: #8A8078; font-family: -apple-system, system-ui, sans-serif; }
+.fn-card { background: #222; border-radius: 16px; padding: 18px 20px; margin-bottom: 10px; display: flex; align-items: center; gap: 14px; }
+.fn-bar { width: 4px; height: 48px; border-radius: 2px; flex-shrink: 0; }
+.prog-row { display: flex; gap: 8px; margin-bottom: 16px; }
+.prog-box { flex: 1; text-align: center; padding: 14px; background: #C4A88210; border-radius: 12px; border: 1px solid #C4A88225; }
+.prog-val { font-size: 18px; color: #C4A882; font-weight: 300; }
+.prog-label { font-size: 10px; color: #8A8078; font-family: -apple-system, system-ui, sans-serif; margin-top: 4px; }
+.ladder-item { display: flex; gap: 14px; margin-bottom: 8px; align-items: center; }
+.ladder-num { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #C4A882; font-family: -apple-system, system-ui, sans-serif; font-weight: 700; flex-shrink: 0; }
+.ladder-card { flex: 1; background: #222; border: 1px solid #2E2E2E; border-radius: 12px; padding: 12px 16px; }
+.quote-card { margin-top: 24px; background: #C4A88208; border: 1px solid #C4A88225; border-radius: 16px; padding: 20px; text-align: center; }
+.quote-text { font-size: 15px; color: #E8DDD0; font-style: italic; line-height: 1.7; }
+.quote-text em { color: #C4A882; font-style: inherit; }
+.week-item { display: flex; align-items: center; gap: 14px; margin-bottom: 8px; }
+.week-card { flex: 1; background: #222; border: 1px solid #2E2E2E; border-radius: 12px; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; }
+.week-rest { opacity: 0.5; }
+/* History */
+.history-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: #1A2A1A; border: 1px solid #3A5A3A; border-radius: 12px; margin-bottom: 8px; }
+.history-empty { text-align: center; padding: 48px 24px; color: #5A5450; font-family: -apple-system, system-ui, sans-serif; font-size: 14px; }
+/* Backup section */
+.backup-btn { width: 100%; padding: 14px; border-radius: 14px; font-size: 14px; font-family: -apple-system, system-ui, sans-serif; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.2s; }
+.backup-info { font-size: 12px; color: #8A8078; font-family: -apple-system, system-ui, sans-serif; line-height: 1.6; padding: 12px 14px; background: #1A1A1A; border-radius: 10px; border: 1px solid #2E2E2E; margin-bottom: 12px; }
+.stats-summary { display: flex; gap: 12px; margin-bottom: 24px; }
+.stat-card { flex: 1; background: #222; border: 1px solid #2E2E2E; border-radius: 14px; padding: 16px; text-align: center; }
+.stat-big { font-size: 28px; font-weight: 300; color: #C4A882; }
+.stat-small { font-size: 10px; color: #8A8078; font-family: -apple-system, system-ui, sans-serif; margin-top: 4px; letter-spacing: 1px; text-transform: uppercase; }
+/* Toast */
+.toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); background: #2A4A2A; border: 1px solid #4A7A4A; color: #80C080; padding: 10px 20px; border-radius: 20px; font-size: 13px; font-family: -apple-system, system-ui, sans-serif; opacity: 0; transition: opacity 0.3s; z-index: 100; white-space: nowrap; }
+.toast.show { opacity: 1; }
+.toast.error { background: #4A2A2A; border-color: #7A4A4A; color: #C08080; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-label">Dein Trainingssystem</div>
+  <h1 class="header-title">Strength &<br><em>Grace</em></h1>
+  <p class="header-sub">Mo · Mi · Fr — 3 Einheiten/Woche</p>
+</div>
+
+<div class="nav">
+  <button class="nav-btn active" onclick="switchView('plan')">Plan</button>
+  <button class="nav-btn" onclick="switchView('history')">Verlauf</button>
+  <button class="nav-btn" onclick="switchView('backup')">Backup</button>
+  <button class="nav-btn" onclick="switchView('goals')">Ziele</button>
+  <button class="nav-btn" onclick="switchView('system')">System</button>
+</div>
+
+<!-- PLAN -->
+<div id="view-plan" class="view active">
+  <div class="day-selector">
+    <button class="day-btn active" style="border-color:#C4A882;color:#E8DDD0;" onclick="switchDay('monday',this,'#C4A882')">
+      <div class="day-emoji">🍑</div><div class="day-name">Montag</div><div class="day-sub" style="color:#C4A882">Glute Strength</div>
+    </button>
+    <button class="day-btn" onclick="switchDay('wednesday',this,'#9A8A7A')">
+      <div class="day-emoji">💪</div><div class="day-name">Mittwoch</div><div class="day-sub">Full Body</div>
+    </button>
+    <button class="day-btn" onclick="switchDay('friday',this,'#B09080')">
+      <div class="day-emoji">✨</div><div class="day-name">Freitag</div><div class="day-sub">Shape & Vol.</div>
+    </button>
+  </div>
+  <div class="day-info">
+    <div>
+      <div class="day-info-loc" id="day-loc">📍 Home</div>
+      <div class="day-info-goal sans" id="day-goal">Maximale Kraft und Muskelaufbau</div>
+    </div>
+    <div style="text-align:right">
+      <div class="count-num" id="count-num" style="color:#C4A882">0/4</div>
+      <div class="count-label">heute erledigt</div>
+    </div>
+  </div>
+  <div class="blocks" id="blocks-container"></div>
+</div>
+
+<!-- HISTORY -->
+<div id="view-history" class="view">
+  <div class="section-pad">
+    <div class="section-eyebrow">Dein Fortschritt</div>
+    <h2 class="section-title">Training <em>Verlauf</em></h2>
+    <div id="history-content"></div>
+  </div>
+</div>
+
+<!-- BACKUP -->
+<div id="view-backup" class="view">
+  <div class="section-pad">
+    <div class="section-eyebrow">Datensicherung</div>
+    <h2 class="section-title">Deine <em>Daten</em></h2>
+
+    <div class="backup-info">
+      💡 Exportiere regelmäßig ein Backup — z.B. nach jedem Training. Die Datei kannst du in iCloud Drive, WhatsApp oder per Mail an dich selbst sichern. Bei einem neuen Gerät einfach wieder importieren.
+    </div>
+
+    <button class="backup-btn sans" onclick="exportData()" style="background:#1A2A1A;border:1px solid #3A5A3A;color:#80C080">
+      <span style="font-size:18px">⬇️</span> Backup exportieren (JSON)
+    </button>
+
+    <button class="backup-btn sans" onclick="document.getElementById('import-file').click()" style="background:#1A1A2A;border:1px solid #3A3A5A;color:#8080C0">
+      <span style="font-size:18px">⬆️</span> Backup importieren
+    </button>
+    <input type="file" id="import-file" accept=".json" style="display:none" onchange="importData(event)">
+
+    <div style="margin-top:8px" class="backup-info" id="backup-status">
+      Noch kein Backup erstellt. Exportiere dein erstes Backup nach deinem ersten Training!
+    </div>
+
+    <div style="margin-top:24px;border-top:1px solid #2E2E2E;padding-top:20px">
+      <div class="section-eyebrow" style="margin-bottom:12px">Datenschutz</div>
+      <div class="backup-info">
+        🔒 Alle Daten werden ausschließlich lokal auf deinem Gerät gespeichert. Es werden keine Daten an Server übertragen. GitHub hostet nur die App-Oberfläche — deine Trainingsdaten verlassen dein iPhone nicht.
+      </div>
+    </div>
+
+    <div style="margin-top:16px">
+      <button class="backup-btn sans" onclick="clearAllData()" style="background:#2A1A1A;border:1px solid #5A3A3A;color:#C08080">
+        <span style="font-size:16px">🗑</span> Alle Daten löschen
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- GOALS -->
+<div id="view-goals" class="view">
+  <div class="section-pad">
+    <div class="section-eyebrow">Warum du trainierst</div>
+    <h2 class="section-title">Deine <em>6 Säulen</em></h2>
+    <div class="card goal-card"><div class="goal-icon">🍑</div><div><div class="goal-label">Glute Aufbau</div><div class="goal-sub">Maximus · Medius · Stabilisatoren</div></div></div>
+    <div class="card goal-card"><div class="goal-icon">💪</div><div><div class="goal-label">Core & Rücken</div><div class="goal-sub">Stabilität · Haltung · LWS</div></div></div>
+    <div class="card goal-card"><div class="goal-icon">🤰</div><div><div class="goal-label">Schwangerschaft</div><div class="goal-sub">Beckenboden · Tiefenmuskulatur</div></div></div>
+    <div class="card goal-card"><div class="goal-icon">❤️</div><div><div class="goal-label">Stoffwechsel</div><div class="goal-sub">Insulinresistenz · Blutzucker</div></div></div>
+    <div class="card goal-card"><div class="goal-icon">🦴</div><div><div class="goal-label">Longevity</div><div class="goal-sub">Knochendichte · Mobilität</div></div></div>
+    <div class="card goal-card"><div class="goal-icon">📈</div><div><div class="goal-label">Progression</div><div class="goal-sub">Woche für Woche stärker</div></div></div>
+    <div class="section-eyebrow" style="margin-top:32px;margin-bottom:16px">Die 3 Glute-Funktionen</div>
+    <div class="fn-card" style="border:1px solid #C4A88230"><div class="fn-bar" style="background:#C4A882"></div><div><div style="font-size:16px;color:#C4A882;margin-bottom:3px">Volumen</div><div style="font-size:11px;color:#8A8078;font-family:-apple-system,sans-serif;margin-bottom:2px">Gluteus Maximus</div><div style="font-size:12px;color:#5A5450;font-family:-apple-system,sans-serif">Hip Thrust · RDL · Glute Bridge</div></div></div>
+    <div class="fn-card" style="border:1px solid #90A8B830"><div class="fn-bar" style="background:#90A8B8"></div><div><div style="font-size:16px;color:#90A8B8;margin-bottom:3px">Breite</div><div style="font-size:11px;color:#8A8078;font-family:-apple-system,sans-serif;margin-bottom:2px">Gluteus Medius</div><div style="font-size:12px;color:#5A5450;font-family:-apple-system,sans-serif">Abduktion · Monster Walk · Kickbacks</div></div></div>
+    <div class="fn-card" style="border:1px solid #A8B89030"><div class="fn-bar" style="background:#A8B890"></div><div><div style="font-size:16px;color:#A8B890;margin-bottom:3px">Stabilität</div><div style="font-size:11px;color:#8A8078;font-family:-apple-system,sans-serif;margin-bottom:2px">Tiefe Stabilisatoren</div><div style="font-size:12px;color:#5A5450;font-family:-apple-system,sans-serif">Clamshell · Bird Dog · Pallof Press</div></div></div>
+  </div>
+</div>
+
+<!-- SYSTEM -->
+<div id="view-system" class="view">
+  <div class="section-pad">
+    <div class="section-eyebrow">Das System</div>
+    <h2 class="section-title" style="margin-bottom:24px">Jede Woche<br><em>ein Stück stärker</em></h2>
+    <div class="card" style="margin-bottom:16px">
+      <div style="font-size:11px;letter-spacing:2px;color:#C4A882;text-transform:uppercase;font-family:-apple-system,sans-serif;margin-bottom:12px">Intensität</div>
+      <div class="prog-row">
+        <div class="prog-box"><div class="prog-val">8–15</div><div class="prog-label">Wiederholungen</div></div>
+        <div class="prog-box"><div class="prog-val">RIR 1–2</div><div class="prog-label">Reserven behalten</div></div>
+      </div>
+      <div style="font-size:12px;color:#8A8078;font-family:-apple-system,sans-serif;margin-top:12px;line-height:1.6">Wenn alle Sätze mit 15 sauberen Wiederholungen möglich sind → Gewicht erhöhen.</div>
+    </div>
+    <div class="section-eyebrow" style="margin-bottom:12px">Progressionsleiter</div>
+    <div class="ladder-item"><div class="ladder-num" style="background:#C4A88215;border:1px solid #C4A88225">L1</div><div class="ladder-card"><div style="font-size:14px;color:#E8DDD0;margin-bottom:2px">Technik</div><div style="font-size:11px;color:#8A8078;font-family:-apple-system,sans-serif">Bewegung sauber und kontrolliert lernen</div></div></div>
+    <div class="ladder-item"><div class="ladder-num" style="background:#C4A88225;border:1px solid #C4A88235">L2</div><div class="ladder-card"><div style="font-size:14px;color:#E8DDD0;margin-bottom:2px">Last</div><div style="font-size:11px;color:#8A8078;font-family:-apple-system,sans-serif">Gewicht schrittweise erhöhen</div></div></div>
+    <div class="ladder-item"><div class="ladder-num" style="background:#C4A88235;border:1px solid #C4A88245">L3</div><div class="ladder-card"><div style="font-size:14px;color:#E8DDD0;margin-bottom:2px">Pause</div><div style="font-size:11px;color:#8A8078;font-family:-apple-system,sans-serif">2 Sek Isometrie am höchsten Punkt</div></div></div>
+    <div class="ladder-item"><div class="ladder-num" style="background:#C4A88245;border:1px solid #C4A88255">L4</div><div class="ladder-card"><div style="font-size:14px;color:#E8DDD0;margin-bottom:2px">Tempo</div><div style="font-size:11px;color:#8A8078;font-family:-apple-system,sans-serif">3 Sek kontrolliertes Absenken</div></div></div>
+    <div class="ladder-item"><div class="ladder-num" style="background:#C4A88255;border:1px solid #C4A88265">L5</div><div class="ladder-card"><div style="font-size:14px;color:#E8DDD0;margin-bottom:2px">Reset & Erhöhen</div><div style="font-size:11px;color:#8A8078;font-family:-apple-system,sans-serif">Gewicht erhöhen → zurück zu Level 2</div></div></div>
+    <div class="quote-card"><div class="quote-text">„Trainiere nicht möglichst viel —<br><em>trainiere möglichst zielgerichtet.</em>"</div></div>
+    <div style="margin-top:24px">
+      <div class="section-eyebrow" style="margin-bottom:12px">Wochenstruktur</div>
+      <div class="week-item"><div style="font-size:20px">🍑</div><div class="week-card"><div><div style="font-size:14px;color:#E8DDD0">Montag</div><div style="font-size:11px;color:#C4A882;font-family:-apple-system,sans-serif">Glute Strength</div></div><div style="font-size:11px;color:#8A8078;font-family:-apple-system,sans-serif">📍 Home</div></div></div>
+      <div class="week-item"><div style="font-size:20px">💪</div><div class="week-card"><div><div style="font-size:14px;color:#E8DDD0">Mittwoch</div><div style="font-size:11px;color:#9A8A7A;font-family:-apple-system,sans-serif">Full Body</div></div><div style="font-size:11px;color:#8A8078;font-family:-apple-system,sans-serif">📍 Studio</div></div></div>
+      <div class="week-item"><div style="font-size:20px">✨</div><div class="week-card"><div><div style="font-size:14px;color:#E8DDD0">Freitag</div><div style="font-size:11px;color:#B09080;font-family:-apple-system,sans-serif">Shape & Volume</div></div><div style="font-size:11px;color:#8A8078;font-family:-apple-system,sans-serif">📍 Home</div></div></div>
+      <div class="week-item week-rest"><div style="font-size:20px">🌙</div><div class="week-card"><div><div style="font-size:14px;color:#8A8078">Di · Do · Sa · So</div><div style="font-size:11px;color:#5A5450;font-family:-apple-system,sans-serif">Ruhe · Regeneration · Spaziergang</div></div></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const exerciseInfo = {
+  "Deep Breathing": { how: "Lege eine Hand auf den Bauch, eine auf die Brust. Atme tief durch die Nase ein und lass den Bauch sich heben. Langsam durch den Mund ausatmen. Die Brust bleibt ruhig.", tip: "Aktiviert das parasympathische Nervensystem und bereitet dich mental auf das Training vor." },
+  "Cat Cow": { how: "Auf allen Vieren. Beim Einatmen: Bauch senken, Blick nach vorn (Cow). Beim Ausatmen: Rücken runden, Kinn zur Brust (Cat). Langsam und fließend.", tip: "Mobilisiert die gesamte Wirbelsäule — besonders wichtig für LWS-Gesundheit." },
+  "World's Greatest Stretch": { how: "Ausfallschritt nach vorn. Hände neben dem vorderen Fuß. Innenarm dreht sich nach oben zur Decke. 2 Sek halten, dann wechseln.", tip: "Öffnet Hüfte, BWS und Schultern in einer einzigen Bewegung." },
+  "Glute Bridge": { how: "Rückenlage, Füße hüftbreit, Knie gebeugt. Po nach oben drücken bis Schultern-Hüfte-Knie eine Linie bilden. 1 Sek oben halten.", tip: "Po zusammenkneifen oben, nicht nur hochdrücken." },
+  "Clamshell": { how: "Seitlage, Hüften leicht gebeugt, Füße zusammen. Das obere Knie öffnet nach oben wie eine Muschel — ohne dass die Hüfte kippt.", tip: "Hüfte darf nicht nach hinten rollen. Klein aber präzise." },
+  "Monster Walk": { how: "Band um die Knie. Leichte Kniebeuge. Schritte seitlich und vorwärts — Knie immer nach außen drücken.", tip: "Langsam und kontrolliert." },
+  "Hip Thrust": { how: "Schulterblätter auf einer Bank, Füße hüftbreit, Gewicht auf den Hüften. Po nach oben drücken bis Knie-Hüfte-Schulter eine Linie bilden. 1 Sek halten.", tip: "Drücke aktiv durch die Fersen. Po zusammenkneifen oben. Rücken nicht durchstrecken." },
+  "Glute Bridge / Hip Thrust": { how: "Rückenlage oder Schulterblätter auf Bank. Po nach oben drücken bis zur geraden Linie. 1 Sek halten, kontrolliert senken.", tip: "Po zusammenkneifen oben. Durch die Fersen drücken." },
+  "Romanian Deadlift": { how: "Hüftbreit stehen, Hanteln vor dem Körper. Rücken gerade, Knie minimal gebeugt. Oberkörper kippt nach vorn — Hüfte geht nach hinten. Aus der Hüfte wieder aufrichten.", tip: "Keine Kniebeuge! Die Bewegung kommt aus der Hüfte. Hanteln nah am Körper führen." },
+  "Bulgarian Split Squat": { how: "Hinterer Fuß auf einer Erhöhung. Körper senkt gerade nach unten — hinteres Knie zur Erde. Vorderes Knie bleibt über dem Fuß.", tip: "Gewicht auf der Ferse des vorderen Fußes. Langsam senken, explosiv hoch." },
+  "Side-Lying Hip Abduction": { how: "Seitlage, Körper gerade. Oberes Bein hebt kontrolliert nach oben — Zehe leicht nach unten gedreht.", tip: "Langsam senken ist wichtiger als hochheben. Der Weg runter baut Muskeln." },
+  "Bird Dog": { how: "Auf allen Vieren, Rücken gerade. Gleichzeitig: rechten Arm und linkes Bein strecken. 2 Sek halten. Zurück, dann wechseln.", tip: "Stell dir vor, ein Glas Wasser liegt auf deinem unteren Rücken." },
+  "Dead Bug": { how: "Rückenlage, Arme zur Decke, Beine im 90°-Winkel. Gleichzeitig: rechten Arm und linkes Bein Richtung Boden senken. Rücken bleibt flach.", tip: "Tiefe Bauchmuskulatur aktiv halten. Langsam atmen." },
+  "Pallof Press": { how: "Kabel oder Band seitlich. Hüftbreit stehen. Arme gerade nach vorn drücken und 2 Sek halten. Der Core verhindert die Rotation.", tip: "Je weiter weg vom Kabelturm, desto schwerer." },
+  "Schrägbankdrücken": { how: "Bank auf 30–45°. Hanteln in Schulterhöhe. Drücke kontrolliert nach oben. Langsam senken.", tip: "Schulterblätter zusammenziehen und in die Bank drücken." },
+  "Lat Pulldown": { how: "Breiter Griff. Leicht nach hinten lehnen. Stange zur oberen Brust ziehen — Ellbogen nach unten und außen.", tip: "Du drückst die Ellbogen nach unten, nicht die Stange." },
+  "Rudern (Maschine / Kabel)": { how: "Aufrecht sitzen. Griff zur Körpermitte ziehen. Schulterblätter 1 Sek zusammendrücken. Kontrolliert vorstrecken.", tip: "Keine Schwungbewegung. Die Arme ziehen, der Rücken stabilisiert." },
+  "Abduktion — Maschine / Kabel": { how: "Aufrecht sitzen. Beine langsam öffnen gegen den Widerstand. 1 Sek außen halten. Kontrolliert zurück.", tip: "Sitz gerade. Langsam ist effektiver als schnell." },
+  "Back Extension": { how: "Hüfte auf der Polsterung. Oberkörper hebt bis zur horizontalen Linie. 1 Sek halten.", tip: "Po mitanspannen oben. Das macht es zur Glute-Übung." },
+  "Fahrrad / Laufband": { how: "Zone 2: Puls ca. 120–140 bpm. Gleichmäßig, nie atemlos. Du könntest dich noch in Sätzen unterhalten.", tip: "Zone 2 verbessert die Insulinsensitivität und den Fettstoffwechsel." },
+  "Step Ups": { how: "Einen Fuß auf eine stabile Erhöhung. Aus der Ferse des oberen Fußes hochdrücken. Oben kurz einbeinig stehen. Kontrolliert senken.", tip: "Das Gewicht bleibt auf dem oberen Bein." },
+  "Kickbacks": { how: "Im Vierfüßlerstand oder am Kabel. Bein nach hinten-oben strecken — Po anspannen. Hüfte bleibt gerade.", tip: "Kleine, kontrollierte Bewegung. Keine Schwung." },
+  "Frog Pumps": { how: "Rückenlage. Fußsohlen berühren sich, Knie fallen nach außen. Po nach oben pumpen. Kurz oben zusammenkneifen.", tip: "Aktiviert die tiefen Gluteus-Fasern die beim Hip Thrust oft schlafen." },
+  "Leichte Sprünge / Seilspringen": { how: "Leichtes Springen. Weich landen — Knie leicht gebeugt. Nicht auf den Fersen landen.", tip: "Nur ohne Schwangerschaft. Stärkt Knochendichte." },
+  "Incline Walking": { how: "Laufband auf 12% Steigung. 2 Min auf 2 km/h, dann 2 Min auf 4 km/h — im Wechsel. Aufrecht bleiben.", tip: "Aktiviert intensiv Gluteus Maximus und Waden." },
+  "Walking": { how: "Zügiges Gehen. Arme schwingen mit. Aufrechte Haltung.", tip: "Fördert die Durchblutung und beschleunigt die Regeneration." },
+  "Mobility Routine": { how: "10 Min: Hüftkreise (10/Seite), Beinschwingen (10/Seite), Schulterkreise, Torso-Rotationen, tiefe Kniebeuge.", tip: "Dynamische Bewegungen aktivieren die Gelenke besser als statisches Dehnen." },
+  "Glute Activation Circuit": { how: "15x Glute Bridge · 10x Clamshell/Seite · 10 Schritte Side Walk. Kein Gewicht.", tip: "Ziel: Die Verbindung Gehirn → Gesäß herstellen, bevor schwere Übungen kommen." },
+};
+
+const dayData = {
+  monday: { loc: "📍 Home", goal: "Maximale Kraft und Muskelaufbau", color: "#C4A882", mainCount: 4, label: "Montag — Glute Strength", emoji: "🍑",
+    blocks: [
+      { title: "Mobility & Aktivierung", type: "warmup", exercises: [{name:"Deep Breathing",detail:"2 Min"},{name:"Cat Cow",detail:"10 Wdh"},{name:"World's Greatest Stretch",detail:"5/Seite"},{name:"Glute Bridge",detail:"15 Wdh — Aktivierung"},{name:"Clamshell",detail:"12/Seite"},{name:"Monster Walk",detail:"10 Schritte/Richtung"}] },
+      { title: "Hip Thrust", type: "main", focus: "Gluteus Maximus", sets: 3, reps: "8–15", rir: "1–2" },
+      { title: "Romanian Deadlift", type: "main", focus: "Glute Max · Hamstrings · Rücken", sets: 3, reps: "8–15", rir: "1–2" },
+      { title: "Bulgarian Split Squat", type: "secondary", focus: "Po · Beine · Balance", sets: 3, reps: "8–12/Seite", rir: "1–2" },
+      { title: "Side-Lying Hip Abduction", type: "isolation", focus: "Gluteus Medius", sets: 3, reps: "15–20/Seite", rir: "1–2" },
+      { title: "Core & Stabilität", type: "core", exercises: [{name:"Bird Dog",detail:"10/Seite · 2 Sätze"},{name:"Dead Bug",detail:"10/Seite · 2 Sätze"},{name:"Pallof Press",detail:"12/Seite · 2 Sätze"}] },
+      { title: "Cardio & Longevity", type: "cardio", exercises: [{name:"Leichte Sprünge / Seilspringen",detail:"2–5 Min · nur ohne Schwangerschaft"},{name:"Incline Walking",detail:"20–30 Min · 12% Steigung"}] },
+    ]
+  },
+  wednesday: { loc: "📍 Studio", goal: "Gesamtkörper kräftigen", color: "#9A8A7A", mainCount: 3, label: "Mittwoch — Full Body", emoji: "💪",
+    blocks: [
+      { title: "Mobility & Aktivierung", type: "warmup", exercises: [{name:"Mobility Routine",detail:"10 Min"}] },
+      { title: "Schrägbankdrücken", type: "main", focus: "Pectoralis · Schultern", sets: 3, reps: "8–12", rir: "1–2" },
+      { title: "Rücken — Lat & Rudern", type: "main", focus: "Latissimus · Rhomboids", sets: 3, reps: "8–12", rir: "1–2", exercises: [{name:"Lat Pulldown",detail:"3 × 10"},{name:"Rudern (Maschine / Kabel)",detail:"3 × 10"}] },
+      { title: "Hip Thrust", type: "main", focus: "Gluteus Maximus", sets: 3, reps: "8–15", rir: "1–2" },
+      { title: "Abduktion — Maschine / Kabel", type: "isolation", focus: "Gluteus Medius", sets: 3, reps: "15–20", rir: "1–2" },
+      { title: "Core & Rücken", type: "core", exercises: [{name:"Back Extension",detail:"12 Wdh · 3 Sätze"},{name:"Pallof Press",detail:"12/Seite · 2 Sätze"}] },
+      { title: "Zone-2-Cardio", type: "cardio", exercises: [{name:"Fahrrad / Laufband",detail:"20–30 Min · niedriger Puls · optional"}] },
+    ]
+  },
+  friday: { loc: "📍 Home", goal: "Po formen · Seitliche Rundung · Volumen", color: "#B09080", mainCount: 4, label: "Freitag — Glute Shape", emoji: "✨",
+    blocks: [
+      { title: "Mobility & Aktivierung", type: "warmup", exercises: [{name:"Mobility Routine",detail:"8–10 Min"},{name:"Glute Activation Circuit",detail:"Bridges · Clamshells · Side Walks"}] },
+      { title: "Glute Bridge / Hip Thrust", type: "main", focus: "Gluteus Maximus", sets: 3, reps: "8–15", rir: "1–2" },
+      { title: "Step Ups", type: "secondary", focus: "Po · Beine · Einbeinige Kraft", sets: 3, reps: "10–12/Seite", rir: "1–2" },
+      { title: "Kickbacks", type: "isolation", focus: "Gluteus Maximus · Form", sets: 3, reps: "15/Seite", rir: "1–2" },
+      { title: "Abduktion & Frog Pumps", type: "isolation", focus: "Gluteus Medius · Tiefe Stabilisatoren", sets: 3, reps: "15–20", rir: "1–2", exercises: [{name:"Side-Lying Hip Abduction",detail:"15/Seite"},{name:"Frog Pumps",detail:"20 Wdh"}] },
+      { title: "Core", type: "core", exercises: [{name:"Bird Dog",detail:"10/Seite · 2 Sätze"},{name:"Dead Bug",detail:"10/Seite · 2 Sätze"}] },
+      { title: "Cardio & Longevity", type: "cardio", exercises: [{name:"Leichte Sprünge / Seilspringen",detail:"2–5 Min · nur ohne Schwangerschaft"},{name:"Walking",detail:"20 Min"}] },
+    ]
+  }
+};
+
+const typeConfig = {
+  warmup:    { bg: "#3A3020", accent: "#C4A050", label: "Warm-Up" },
+  main:      { bg: "#2A1F2A", accent: "#C4A882", label: "Hauptübung" },
+  secondary: { bg: "#1F2A2A", accent: "#90B0B0", label: "Nebenübung" },
+  isolation: { bg: "#2A2A1F", accent: "#B0B060", label: "Isolation" },
+  core:      { bg: "#1F2020", accent: "#80A0A0", label: "Core" },
+  cardio:    { bg: "#201F2A", accent: "#9080C0", label: "Cardio" },
+};
+
+const STORAGE_KEY = 'sg_v2';
+let currentDay = "monday";
+let infoOpenMap = {};
+let blockOpenMap = {};
+
+function loadData() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch(e) { return {}; } }
+function saveData(d) { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(d)); } catch(e) {} }
+function getTodayKey() { return new Date().toISOString().split('T')[0]; }
+function getStoredDone() { const d = loadData(); return d[getTodayKey()] || {}; }
+function saveDone(key, val) {
+  const data = loadData(); const today = getTodayKey();
+  if (!data[today]) data[today] = {};
+  if (val) data[today][key] = true; else delete data[today][key];
+  saveData(data);
+}
+
+function showToast(msg, isError) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = 'toast' + (isError ? ' error' : '') + ' show';
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ── Export / Import ──
+function exportData() {
+  const data = loadData();
+  const keys = Object.keys(data);
+  if (keys.length === 0) { showToast('Noch keine Daten zum Exportieren', true); return; }
+  const json = JSON.stringify({ app: 'strength-grace', version: 2, exportDate: new Date().toISOString(), data }, null, 2);
+  const blob = new Blob([json], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  const date = getTodayKey();
+  a.download = `strength-grace-backup-${date}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('✓ Backup exportiert!');
+  updateBackupStatus();
+}
+
+function importData(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const parsed = JSON.parse(e.target.result);
+      if (!parsed.data || parsed.app !== 'strength-grace') { showToast('Ungültige Backup-Datei', true); return; }
+      const existing = loadData();
+      const merged = Object.assign({}, existing, parsed.data);
+      saveData(merged);
+      showToast('✓ Backup erfolgreich importiert!');
+      updateBackupStatus();
+      renderDay();
+    } catch(err) { showToast('Fehler beim Importieren', true); }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+function clearAllData() {
+  if (confirm('Wirklich alle Trainingsdaten löschen? Diese Aktion kann nicht rückgängig gemacht werden.')) {
+    localStorage.removeItem(STORAGE_KEY);
+    showToast('Alle Daten gelöscht');
+    renderDay();
+    updateBackupStatus();
+  }
+}
+
+function updateBackupStatus() {
+  const data = loadData();
+  const keys = Object.keys(data);
+  const el = document.getElementById('backup-status');
+  if (!el) return;
+  if (keys.length === 0) {
+    el.textContent = 'Noch kein Training gespeichert.';
+  } else {
+    const latest = keys.sort().reverse()[0];
+    const d = new Date(latest);
+    const str = d.toLocaleDateString('de-DE', { weekday: 'long', day: 'numeric', month: 'long' });
+    const total = keys.reduce((acc, k) => acc + Object.keys(data[k]).filter(x => data[k][x]).length, 0);
+    el.innerHTML = `✓ ${keys.length} Training${keys.length > 1 ? 's' : ''} gespeichert · ${total} Übungen erledigt<br>Letztes Training: ${str}`;
+  }
+}
+
+function switchView(view) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('view-' + view).classList.add('active');
+  const idx = ['plan','history','backup','goals','system'].indexOf(view);
+  document.querySelectorAll('.nav-btn')[idx].classList.add('active');
+  if (view === 'history') renderHistory();
+  if (view === 'backup') updateBackupStatus();
+}
+
+function switchDay(day, btn, color) {
+  currentDay = day;
+  document.querySelectorAll('.day-btn').forEach(b => { b.classList.remove('active'); b.style.borderColor='#2E2E2E'; b.style.color='#8A8078'; b.querySelector('.day-sub').style.color='#5A5450'; });
+  btn.classList.add('active'); btn.style.borderColor=color; btn.style.color='#E8DDD0'; btn.querySelector('.day-sub').style.color=color;
+  renderDay();
+}
+
+function toggleBlock(id) {
+  blockOpenMap[id] = !blockOpenMap[id];
+  document.getElementById('body-'+id)?.classList.toggle('open', blockOpenMap[id]);
+  document.getElementById('arrow-'+id)?.classList.toggle('open', blockOpenMap[id]);
+}
+
+function toggleInfo(id, accent) {
+  infoOpenMap[id] = !infoOpenMap[id];
+  document.getElementById('howto-'+id)?.classList.toggle('open', infoOpenMap[id]);
+  const btn = document.getElementById('howto-btn-'+id);
+  if (btn) btn.innerHTML = `<span class="howto-toggle-title">Wie wird es ausgeführt?</span><span class="howto-toggle-label" style="color:${accent}">${infoOpenMap[id]?'WENIGER ▴':'ANZEIGEN ▾'}</span>`;
+}
+
+function toggleExInfo(id) {
+  infoOpenMap['ex-'+id] = !infoOpenMap['ex-'+id];
+  document.getElementById('ex-body-'+id)?.classList.toggle('open', infoOpenMap['ex-'+id]);
+  const lbl = document.getElementById('ex-wie-'+id);
+  if (lbl) lbl.textContent = infoOpenMap['ex-'+id] ? 'WENIGER ▴' : 'WIE? ▾';
+}
+
+function toggleDone(key, title) {
+  const stored = getStoredDone();
+  const newVal = !stored[key];
+  saveDone(key, newVal);
+  const block = document.getElementById('block-'+key);
+  const btn = document.getElementById('done-'+key);
+  if (block) { block.style.background = newVal ? '#1A2A1A' : typeConfig[dayData[currentDay].blocks[parseInt(key.split('-')[1])].type].bg; block.style.borderColor = newVal ? '#3A5A3A' : '#2E2E2E'; }
+  if (btn) { btn.textContent = newVal ? '✓ Erledigt' : 'Als erledigt markieren'; btn.style.background = newVal ? '#2A4A2A' : '#C4A88225'; btn.style.borderColor = newVal ? '#4A7A4A' : '#C4A88250'; btn.style.color = newVal ? '#80C080' : '#C4A882'; }
+  if (newVal) showToast('✓ ' + title + ' gespeichert');
+  updateCount();
+}
+
+function updateCount() {
+  const day = dayData[currentDay]; const stored = getStoredDone();
+  let count = 0;
+  day.blocks.forEach((b,i) => { if (b.sets && stored[currentDay+'-'+i]) count++; });
+  const el = document.getElementById('count-num');
+  if (el) { el.textContent = count+'/'+day.mainCount; el.style.color = day.color; }
+}
+
+function renderDay() {
+  const day = dayData[currentDay]; const stored = getStoredDone();
+  document.getElementById('day-loc').textContent = day.loc;
+  document.getElementById('day-goal').textContent = day.goal;
+  updateCount();
+  const container = document.getElementById('blocks-container');
+  container.innerHTML = '';
+  day.blocks.forEach((block, i) => {
+    const cfg = typeConfig[block.type]; const key = currentDay+'-'+i;
+    const isDone = !!stored[key]; const isMain = !!block.sets;
+    const info = exerciseInfo[block.title];
+    const div = document.createElement('div');
+    div.className = 'block'; div.id = 'block-'+key;
+    div.style.background = isDone ? '#1A2A1A' : cfg.bg;
+    div.style.border = `1px solid ${isDone ? '#3A5A3A' : '#2E2E2E'}`;
+    let body = '';
+    if (isMain) body += `<div class="stats-row"><div class="stat-box" style="background:${cfg.accent}15;border:1px solid ${cfg.accent}25"><div class="stat-val" style="color:${cfg.accent}">${block.sets}</div><div class="stat-label">Sätze</div></div><div class="stat-box" style="background:${cfg.accent}15;border:1px solid ${cfg.accent}25"><div class="stat-val" style="color:${cfg.accent}">${block.reps}</div><div class="stat-label">Wdh</div></div><div class="stat-box" style="background:${cfg.accent}15;border:1px solid ${cfg.accent}25"><div class="stat-val" style="color:${cfg.accent}">${block.rir}</div><div class="stat-label">RIR</div></div></div>`;
+    if (isMain && info && !block.exercises) body += `<button id="howto-btn-${key}" class="howto-toggle" onclick="toggleInfo('${key}','${cfg.accent}')" style="background:${cfg.accent}08;border:1px solid ${cfg.accent}25"><span class="howto-toggle-title">Wie wird es ausgeführt?</span><span class="howto-toggle-label" style="color:${cfg.accent}">ANZEIGEN ▾</span></button><div id="howto-${key}" class="howto-content"><div class="howto-heading" style="color:${cfg.accent}">Ausführung</div><div class="howto-text">${info.how}</div><div class="howto-tip" style="background:${cfg.accent}10;border:1px solid ${cfg.accent}20"><span>💡</span><span class="howto-tip-text">${info.tip}</span></div></div>`;
+    if (block.exercises) block.exercises.forEach((ex,j) => { const eid=key+'-'+j; const ei=exerciseInfo[ex.name]; body+=`<div class="ex-card" style="background:${cfg.accent}06"><button class="ex-card-header" onclick="toggleExInfo('${eid}')" style="width:100%"><div><div class="ex-name">${ex.name}</div><div class="ex-detail">${ex.detail}</div></div>${ei?`<span id="ex-wie-${eid}" class="ex-wie" style="color:${cfg.accent}">WIE? ▾</span>`:''}</button>${ei?`<div id="ex-body-${eid}" class="ex-body"><div class="ex-inner"><div class="howto-heading" style="color:${cfg.accent}">Ausführung</div><div class="howto-text">${ei.how}</div><div class="howto-tip" style="background:${cfg.accent}10;border:1px solid ${cfg.accent}20"><span>💡</span><span class="howto-tip-text">${ei.tip}</span></div></div></div>`:''}</div>`; });
+    if (isMain) { const t = block.title.replace(/'/g,"\\'"); body+=`<button id="done-${key}" class="done-btn sans" onclick="toggleDone('${key}','${t}')" style="background:${isDone?'#2A4A2A':'#C4A88225'};border:1px solid ${isDone?'#4A7A4A':'#C4A88250'};color:${isDone?'#80C080':'#C4A882'}">${isDone?'✓ Erledigt':'Als erledigt markieren'}</button>`; }
+    div.innerHTML = `<button class="block-header" onclick="toggleBlock('${key}')" style="width:100%"><div class="block-num" style="background:${cfg.accent}20;border:1px solid ${cfg.accent}40;color:${cfg.accent}">${i+1}</div><div class="block-info"><div class="block-type-label sans" style="color:${cfg.accent}">${cfg.label}</div><div class="block-title">${block.title}</div>${block.focus?`<div class="block-focus">${block.focus}</div>`:''}</div>${isMain?`<div class="block-sets"><div class="block-sets-num" style="color:${cfg.accent}">${block.sets}×</div><div class="block-sets-reps">${block.reps}</div></div>`:''}<div class="block-arrow" id="arrow-${key}">▾</div></button><div class="block-body" id="body-${key}">${body}</div>`;
+    container.appendChild(div);
+  });
+}
+
+function renderHistory() {
+  const data = loadData(); const dates = Object.keys(data).sort().reverse();
+  const container = document.getElementById('history-content');
+  if (dates.length === 0) { container.innerHTML = `<div class="history-empty"><div style="font-size:40px;margin-bottom:16px">🌱</div>Noch kein Training gespeichert.<br>Markiere deine ersten Übungen als erledigt!</div>`; return; }
+  const total = dates.reduce((acc,d) => acc + Object.keys(data[d]).filter(k=>data[d][k]).length, 0);
+  let html = `<div class="stats-summary"><div class="stat-card"><div class="stat-big">${dates.length}</div><div class="stat-small">Trainings</div></div><div class="stat-card"><div class="stat-big">${total}</div><div class="stat-small">Übungen</div></div></div>`;
+  dates.forEach(date => {
+    const entries = data[date]; const keys = Object.keys(entries).filter(k=>entries[k]);
+    if (!keys.length) return;
+    const d = new Date(date); const str = d.toLocaleDateString('de-DE',{weekday:'long',day:'numeric',month:'long'});
+    html += `<div style="margin-bottom:28px"><div style="font-size:11px;letter-spacing:2px;color:#8A8078;text-transform:uppercase;font-family:-apple-system,sans-serif;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #2E2E2E">${str}</div>`;
+    keys.forEach(key => {
+      const parts = key.split('-'); const dId = parts[0]; const bIdx = parseInt(parts[1]);
+      const di = dayData[dId]; if (!di) return; const bl = di.blocks[bIdx]; if (!bl) return;
+      html += `<div class="history-item"><span style="font-size:16px">✓</span><div><div style="font-size:14px;color:#E8DDD0;font-family:-apple-system,sans-serif">${bl.title}</div><div style="font-size:11px;color:#80C080;font-family:-apple-system,sans-serif;margin-top:2px">${di.emoji} ${di.label}</div></div></div>`;
+    });
+    html += '</div>';
+  });
+  html += `<button onclick="clearAllData()" style="width:100%;padding:12px;border-radius:12px;border:1px solid #3A2020;background:#2A1A1A;color:#C08080;font-size:13px;font-family:-apple-system,sans-serif;margin-top:8px">🗑 Verlauf löschen</button>`;
+  container.innerHTML = html;
+}
+
+renderDay();
+updateBackupStatus();
+</script>
+</body>
+</html>
