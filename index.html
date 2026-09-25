@@ -28,7 +28,7 @@ input:focus,select:focus{outline:none;border-color:#C4A882}
 .nav-btn.active{color:#E8DDD0;border-bottom-color:#C4A882}
 
 .view{display:none}.view.active{display:block}
-.pad{padding:20px 24px}
+.pad{padding:24px}
 
 .card{background:#1E1E1E;border:1px solid #2E2E2E;border-radius:16px;padding:16px 18px;margin-bottom:10px}
 
@@ -56,7 +56,7 @@ input:focus,select:focus{outline:none;border-color:#C4A882}
 .rc{padding:10px 12px;border-radius:10px;font-size:13px;font-family:-apple-system,system-ui,sans-serif;border:1px solid #3A3A3A;color:#8A8078;background:#1A1A1A;transition:all 0.15s}
 .rc.on{color:#0F0F0F;border-color:transparent}
 
-.lbl{font-size:11px;letter-spacing:1px;color:#8A8078;text-transform:uppercase;font-family:-apple-system,system-ui,sans-serif;margin-bottom:6px;margin-top:12px}
+.lbl{font-size:11px;letter-spacing:1px;color:#8A8078;text-transform:uppercase;font-family:-apple-system,system-ui,sans-serif;margin-bottom:8px;margin-top:16px}
 
 .howto-box{display:none;background:#141414;border-radius:10px;padding:12px 14px;border:1px solid #2A2A2A;margin:8px 0}
 .howto-box.open{display:block}
@@ -65,12 +65,12 @@ input:focus,select:focus{outline:none;border-color:#C4A882}
 
 .note-box{background:#1A1800;border:1px solid #4A4000;border-radius:10px;padding:9px 12px;margin:8px 0;font-size:12px;color:#C4A050;font-family:-apple-system,system-ui,sans-serif;line-height:1.5}
 
-.studio-card{background:#1E1E1E;border:1px solid #2E2E2E;border-radius:14px;padding:14px 16px;margin-bottom:8px;display:flex;align-items:center;gap:12px;cursor:pointer}
+.studio-card{background:#1E1E1E;border:1px solid #2E2E2E;border-radius:14px;padding:14px 16px;margin-bottom:10px;display:flex;align-items:center;gap:12px;cursor:pointer}
 .studio-card.on{border-color:#C4A882;background:#1E1A14}
 .studio-dot{width:10px;height:10px;border-radius:50%;background:#3A3A3A;flex-shrink:0}
 .studio-card.on .studio-dot{background:#C4A882}
 
-.mob-ex{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #1E1E1E}
+.mob-ex{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #1E1E1E}
 .mob-ex:last-child{border-bottom:none}
 
 .bar-row{display:flex;align-items:flex-end;gap:4px;height:56px;margin:10px 0}
@@ -106,6 +106,8 @@ input:focus,select:focus{outline:none;border-color:#C4A882}
 
 .prog-bar-wrap{background:#2E2E2E;border-radius:2px;height:3px;margin:6px 0 12px}
 .prog-bar-fill{background:#C4A882;height:100%;border-radius:2px;transition:width 0.3s}
+.block-gap{height:28px}
+.block-title{font-size:13px;letter-spacing:2px;color:#8A8078;text-transform:uppercase;font-family:-apple-system,system-ui,sans-serif;margin-bottom:10px}
 </style>
 </head>
 <body>
@@ -177,15 +179,26 @@ var SLOTS={
   },
   STEP_UP:{label:'Step-Up',color:'#8A9070',def:'Step-Up',
     alts:['Dumbbell Step-Up'],
-    howto:{'Step-Up':'Fuß komplett auf Erhöhung. Aus Ferse des oberen Fußmes hochdrücken. Oben kurz stehen. Kontrolliert senken. Tip: Höherer Step = mehr Glutes. Gewicht auf oberem Bein.'}
+    howto:{
+      'Step-Up':'Fuß komplett auf Erhöhung setzen. Aus der Ferse des oberen Fußes hochdrücken — das untere Bein hilft nicht. Oben kurz einbeinig stehen. Kontrolliert senken. Tip: Höherer Step = mehr Glutes. Gewicht auf oberem Bein lassen.',
+      'Dumbbell Step-Up':'Wie Bodyweight Step-Up, Hanteln in jeder Hand. Tip: Rumpf stabil halten, nicht zur Seite kippen.'
+    }
   },
   LUNGE:{label:'Reverse Lunge',color:'#8A8870',def:'Reverse Lunge',
     alts:['Dumbbell Reverse Lunge','Smith Machine Reverse Lunge'],
-    howto:{'Reverse Lunge':'Schritt nach hinten. Hinteres Knie zur Erde. Vorderes Knie ueber Fuß. Aus Ferse des vorderen Fußmes hochdrücken. Tip: Aufrechter Oberkörper. Weiter Schritt = mehr Glutes.'}
+    howto:{
+      'Reverse Lunge':'Schritt nach hinten. Hinteres Knie zur Erde senken. Vorderes Knie über Fuß. Aus Ferse des vorderen Fußes hochdrücken. Tip: Aufrechter Oberkörper. Weiter Schritt = mehr Glutes.',
+      'Dumbbell Reverse Lunge':'Wie Reverse Lunge, Hanteln in jeder Hand. Tip: Rumpf extra stabil halten.',
+      'Smith Machine Reverse Lunge':'Stange auf Schultern. Schritt nach hinten unter Führung. Gut für höhere Lasten.'
+    }
   },
   LEG_CURL:{label:'Leg Curl',color:'#7A8A8A',def:'Seated Leg Curl',
     alts:['Lying Leg Curl','Single-Leg Curl'],
-    howto:{'Seated Leg Curl':'Aufrecht sitzen. Beine gegen Pad. Kontrolliert beugen bis ca. 90°. 1 Sek halten. Kontrolliert strecken. Tip: Sitzend oft effektiver wegen Hüftposition.'}
+    howto:{
+      'Seated Leg Curl':'Aufrecht sitzen, Rücken an Lehne. Beine unter das Pad. Kontrolliert beugen bis ca. 90°. 1 Sek halten. Langsam strecken. Tip: Sitzend oft effektiver wegen Hüftposition — Kniebeugung unter Hüftbeugung.',
+      'Lying Leg Curl':'Bauch auf Polsterung. Fersen unter das Pad klemmen. Beugen bis Oberschenkel kaum vom Pad hebt. Langsam strecken. Tip: Hüften bleiben auf der Bank. Langsames Strecken = mehr Reiz.',
+      'Single-Leg Curl':'Wie Lying Curl, aber ein Bein. Andere Seite entspannt. Tip: Gut für Seitenunterschiede. Gewicht deutlich reduzieren.'
+    }
   },
   LAT_PULL:{label:'Lat Pulldown',color:'#7090A0',def:'Lat Pulldown',
     alts:['Close-Grip Lat Pulldown'],
@@ -214,12 +227,20 @@ var SLOTS={
   },
   ZONE2:{label:'Zone 2 Cardio',color:'#607070',def:'Incline Treadmill Walking',
     alts:['Bike','Elliptical','Outdoor Walking'],
-    howto:{'Incline Treadmill Walking':'10-12% Steigung. 3-4 km/h. Aufrecht -- nicht am Griff festhalten. Tip: Puls 120-140 bpm. Du könntest dich noch unterhalten.'}
+    howto:{
+      'Incline Treadmill Walking':'10-12% Steigung, 3-4 km/h. Aufrecht gehen — nicht am Griff festhalten (das nimmt die Belastung raus). Tip: Ziel: Puls 120-140 bpm. Du könntest noch ganze Sätze sprechen.',
+      'Bike':'Moderates Tempo, Puls 120-140 bpm. Sattel so einstellen dass Knie bei voller Streckung leicht gebeugt bleibt. Tip: Gelenkschonend. Gut als Alternative.',
+      'Elliptical':'Moderates Tempo, Arme mitschwingen lassen. Puls 120-140 bpm. Tip: Ganzkörper-Zone-2 mit wenig Gelenkbelastung.',
+      'Outdoor Walking':'Zügiges Gehen draußen, leicht bergige Route ideal. Tip: Frische Luft als Bonus. Puls mit Hand kurz messen wenn kein Tracker.'
+    }
   },
-  IMPACT:{label:'Seilspringen',color:'#806060',def:'Jump Rope',
+  IMPACT:{label:'Seilspringen / Impact',color:'#806060',def:'Jump Rope',
     alts:['Pogo Hops','Step-Up Impact'],
-    howto:{'Jump Rope':'Wo 1-2: 3x20 Sek. Wo 3-4: 3x30 Sek. Ab Wo 5: 3x45 Sek. Weich landen -- Vorfuß. Tip: Knochenreiz, kein Cardio. Nicht bei Schwangerschaft.',
-    'Pogo Hops':'Kleine beidbeinige Spruenge auf der Stelle. 3x10. Tip: Wenn Seilspringen unangenehm.'}
+    howto:{
+      'Jump Rope':'Wo 1-2: 3x20 Sek, Wo 3-4: 3x30 Sek, ab Wo 5: 3x45 Sek. Weich landen, Vorfuß zuerst, Knie leicht gebeugt. Tip: Knochenreiz, kein Ausdauertraining. Kurze Pausen.',
+      'Pogo Hops':'Kleine beidbeinige Sprünge auf der Stelle, 3x10 Wdh. Weich landen. Tip: Wenn Seilspringen unangenehm.',
+      'Step-Up Impact':'Zügiges Treppensteigen oder Step-Ups. Tip: Alternative wenn Sprünge nicht gehen.'
+    }
   }
 };
 
@@ -236,7 +257,7 @@ var TEMPLATES={
       {slot:'ZONE2',duration:'10-15 Min'}
     ]
   },
-  wednesday:{label:'Mittwoch',emoji:'💪',focus:'Shape + Upper',color:'#9A8A7A',
+  wednesday:{label:'Mittwoch',emoji:'💪🏾',focus:'Shape + Upper',color:'#9A8A7A',
     slots:[
       {slot:'SQUAT',sets:3,reps:'8-12',rir:'1-2',note:'Füße schulterbreit, tief gehen'},
       {slot:'STEP_UP',sets:2,reps:'8-12',rir:'1-2'},
@@ -327,7 +348,7 @@ function toast(msg,err){
 
 function getStudios(){
   return DB.get('studios',{
-    gym_a:{id:'gym_a',name:'Studio A',icon:'🏋️',eq:Object.keys(SLOTS)},
+    gym_a:{id:'gym_a',name:'Studio A',icon:'🏋🏾',eq:Object.keys(SLOTS)},
     home:{id:'home',name:'Home Gym',icon:'🏠',eq:[]}
   });
 }
@@ -357,11 +378,16 @@ function checkProg(exName,template){
 }
 
 // ---- WORKOUT STATE ----
-var WS={active:false,day:null,studio:null,idx:0,sets:{},subs:{},skipped:[],deferred:[],startTime:0};
+var WS={active:false,day:null,studio:null,idx:0,sets:{},subs:{},skipped:[],deferred:[],startTime:0,partial:{},_savedState:null,previewDay:null};
 var PS={};// pending set inputs
 
 // ---- NAV ----
 function NAV(view){
+  // If workout is active and user navigates away, save state
+  if(WS.active&&view!=='workout'){
+    WS._savedState={day:WS.day,studio:WS.studio,idx:WS.idx,sets:WS.sets,subs:WS.subs,skipped:WS.skipped,deferred:WS.deferred,startTime:WS.startTime,date:DB.today()};
+    WS.active=false;
+  }
   document.querySelectorAll('.view').forEach(function(v){v.classList.remove('active');});
   document.querySelectorAll('.nav-btn').forEach(function(b){b.classList.remove('active');});
   document.getElementById('view-'+view).classList.add('active');
@@ -377,6 +403,15 @@ function NAV(view){
 }
 
 // ---- RENDER PLAN ----
+var DAILY_CARDS=[{"text": "Oder wisst ihr nicht, dass euer Leib ein Tempel des Heiligen Geistes ist? Verherrlicht also Gott in eurem Leibe.", "ref": "1. Korinther 6,19-20"}, {"text": "Denn leibliche Übung ist zu wenigem nützlich, aber die Gottseligkeit ist zu allem nützlich.", "ref": "1. Timotheus 4,8"}, {"text": "Alles, was ihr tut, tut es von Herzen als dem Herrn und nicht den Menschen.", "ref": "Kolosser 3,23"}, {"text": "Ich vermag alles durch den, der mich stark macht.", "ref": "Philipper 4,13"}, {"text": "Kraft und Würde sind ihr Gewand, und sie lacht über den kommenden Tag.", "ref": "Sprüche 31,25"}, {"text": "Der HERR ist meine Kraft und mein Schild.", "ref": "Psalm 28,7"}, {"text": "Sei stark und mutig. Hab keine Angst und erschrick nicht, denn der HERR, dein Gott, ist mit dir.", "ref": "Josua 1,9"}, {"text": "Progressives Überlasten ist der wichtigste Faktor für Muskelaufbau. Der Körper passt sich nur an Reize an, die über dem gewohnten Niveau liegen.", "ref": "Sportwissenschaft"}, {"text": "Regelmäßiges Krafttraining verbessert die Insulinsensitivität signifikant — besonders wichtig bei Insulinresistenz.", "ref": "Forschungsfakt"}, {"text": "Schlaf ist der stärkste anabole Stimulus. Ohne ausreichend Schlaf wird kein Muskel aufgebaut, egal wie gut das Training ist.", "ref": "Sportwissenschaft"}, {"text": "Glute-Muskeln sind die größten und stärksten Muskeln des Körpers — ihr Training verbessert Haltung, Kraft und Stoffwechsel gleichzeitig.", "ref": "Sportwissenschaft"}, {"text": "Zone-2-Training stärkt das Herz-Kreislauf-System und verbessert die Fettverbrennung — ohne die Kraft-Regeneration zu beeinträchtigen.", "ref": "Forschungsfakt"}, {"text": "Krafttraining erhöht die Knochendichte und schützt langfristig vor Osteoporose — besonders wichtig für Frauen.", "ref": "Forschungsfakt"}, {"text": "RIR 1-2 (1-2 Wiederholungen in Reserve) ist der optimale Bereich für Hypertrophie ohne übermäßige Erschöpfung.", "ref": "Sportwissenschaft"}, {"text": "Bewegung ist Medizin. Körperliche Aktivität reduziert das Risiko für Depression um bis zu 30%.", "ref": "WHO, 2020"}, {"text": "Der Leib und die Seele sind ein Ganzes. Was du für deinen Körper tust, tust du auch für deinen Geist.", "ref": "Ganzheitliche Gesundheit"}, {"text": "Wer rastet, der rostet. Aber wer klug trainiert, baut für Jahrzehnte.", "ref": "Trainingsprinzip"}, {"text": "Progressives Überlasten bedeutet: lieber 5 kg mehr auf der Hüftstrecke als 15 verschiedene Glute-Übungen.", "ref": "Sportwissenschaft"}];
+
+function getWeekNumber(d){
+  var date=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));
+  date.setUTCDate(date.getUTCDate()+4-(date.getUTCDay()||7));
+  var yearStart=new Date(Date.UTC(date.getUTCFullYear(),0,1));
+  return Math.ceil((((date-yearStart)/86400000)+1)/7);
+}
+
 function renderPlan(){
   var today=new Date();
   var dow=today.getDay();
@@ -395,7 +430,7 @@ function renderPlan(){
   ws.setDate(diff);
 
   // Week strip
-  var strip='<div style="padding:12px 24px 4px"><div style="font-size:10px;letter-spacing:2px;color:#8A8078;text-transform:uppercase;font-family:-apple-system,system-ui,sans-serif;margin-bottom:8px">Diese Woche</div><div class="week-strip">';
+  var strip='<div style="padding:16px 24px 6px"><div class=\"block-title\">Diese Woche</div><div id="week-label" style="font-size:11px;color:#8A8078;font-family:-apple-system,system-ui,sans-serif;margin-bottom:8px"></div><div class="week-strip">';
   for(var i=0;i<7;i++){
     var dd=new Date(ws);dd.setDate(ws.getDate()+i);
     var dk=dd.toISOString().split('T')[0];
@@ -410,42 +445,27 @@ function renderPlan(){
     var isMobDone=Object.keys(mobD).length>0;
     var cls='wd'+(isToday?' today':'')+(isDone?' g-done':'')+(isMobDone&&!isDone?' b-done':'');
     var dayC=isDone?'#60C060':isMobDone?'#6060B0':isToday?'#C4A882':'#5A5450';
-    var icon=isW?'💪':isM?'🧘':isSun?'🌙':'·';
+    var icon=isW?'💪🏾':isM?'🧘🏾':isSun?'🌙':'·';
     var check=isDone||isMobDone?'✓':'';
     strip+='<div class="'+cls+'"><div class="wd-name" style="color:'+dayC+'">'+dn+'</div><div class="wd-icon">'+icon+'</div><div class="wd-check" style="color:'+dayC+'">'+check+'</div></div>';
   }
   strip+='</div></div>';
 
-  // Studio selector
-  var studioHtml='<div style="padding:8px 24px 0"><div style="font-size:10px;letter-spacing:2px;color:#8A8078;text-transform:uppercase;font-family:-apple-system,system-ui,sans-serif;margin-bottom:8px">Heutiges Studio</div>';
+  // Studio selector — nur an Krafttrainingstagen
+  var studioHtml='';
+  if(todayWorkout){
+  studioHtml='<div class="block-gap"></div><div style="padding:0 24px 4px"><div class=\"block-title\">Heutiges Studio</div>';
   var studioList=Object.keys(studios).map(function(k){return studios[k];});
   for(var si=0;si<studioList.length;si++){
     var s=studioList[si];
     studioHtml+='<div class="studio-card'+(s.id===activeS?' on':'')+'" onclick="setStudio(\''+s.id+'\')"><div class="studio-dot"></div><div style="flex:1;font-size:14px;color:#E8DDD0;font-family:-apple-system,system-ui,sans-serif">'+s.icon+' '+s.name+'</div>'+(s.id===activeS?'<span style="font-size:11px;color:#C4A882;font-family:-apple-system,system-ui,sans-serif">aktiv</span>':'')+'</div>';
   }
   studioHtml+='<button class="btn btn-ghost" style="font-size:12px;margin-top:4px;margin-bottom:8px;padding:10px" onclick="NAV(\'more\')">+ Studio hinzufügen</button></div>';
-
-  // Today main card
-  var mainHtml='';
-  if(todayWorkout){
-    var tmpl=TEMPLATES[todayWorkout];
-    var slotLines='';
-    var ss=tmpl.slots;
-    for(var ti=0;ti<ss.length;ti++){
-      var sl=ss[ti];
-      if(!sl.sets&&!sl.duration)continue;
-      var exN=bestEx(sl.slot,activeS);
-      slotLines+='<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #1E1E1E;font-size:12px;font-family:-apple-system,system-ui,sans-serif"><span style="color:#C8C0B8">'+exN+'</span><span style="color:#5A5450">'+(sl.sets?sl.sets+'x'+sl.reps:sl.duration||'')+'</span></div>';
-    }
-    mainHtml='<div style="padding:12px 24px 0"><div class="card" style="border-color:'+tmpl.color+'40"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><div><div style="font-size:18px;color:#E8DDD0">'+tmpl.emoji+' '+tmpl.focus+'</div><div style="font-size:11px;color:#8A8078;font-family:-apple-system,system-ui,sans-serif;margin-top:2px">'+studio.icon+' '+studio.name+'</div></div><div style="font-size:11px;color:'+tmpl.color+';font-family:-apple-system,system-ui,sans-serif">'+ss.filter(function(x){return x.sets;}).length+' Übungen</div></div>'+slotLines+'<button class="btn btn-primary" style="margin-top:12px" onclick="startWorkout(\''+todayWorkout+'\',\''+activeS+'\')">Training starten</button></div></div>';
-  }else if(todayMob){
-    var mobS=MOB[todayMob];
-    mainHtml='<div style="padding:12px 24px 0"><div class="card" style="border-color:#3A3A6A"><div style="font-size:18px;color:#E8DDD0;margin-bottom:6px">🧘 '+mobS.focus+'</div><div style="font-size:12px;color:#8080C0;font-family:-apple-system,system-ui,sans-serif;margin-bottom:12px">'+mobS.exercises.length+' Übungen</div><button class="btn btn-mob" onclick="NAV(\'mobility\')">Mobility starten</button></div></div>';
-  }else{
-    mainHtml='<div style="padding:12px 24px 0"><div class="card" style="text-align:center;padding:24px"><div style="font-size:32px;margin-bottom:8px">🌙</div><div style="font-size:14px;color:#8A8078;font-family:-apple-system,system-ui,sans-serif">Ruhetag -- erhol dich gut</div></div></div>';
   }
 
-  // Retro entry
+  var mainHtml='';
+
+    // Retro entry
   var retroOpts='<option value="">Tag wählen</option>';
   for(var ri=0;ri<7;ri++){
     var rd=new Date();rd.setDate(rd.getDate()-ri);
@@ -453,9 +473,24 @@ function renderPlan(){
     var rdn=dayNames[rd.getDay()];
     retroOpts+='<option value="'+rdk+'">'+rdn+' ('+rdk.slice(5)+')</option>';
   }
-  var retroHtml='<div style="padding:8px 24px 16px"><div style="font-size:10px;letter-spacing:2px;color:#8A8078;text-transform:uppercase;font-family:-apple-system,system-ui,sans-serif;margin-bottom:8px">Training nachträglich eintragen</div><div class="card" style="padding:12px 14px"><div style="font-size:11px;color:#8A8078;font-family:-apple-system,system-ui,sans-serif;margin-bottom:8px">Wochentag bestimmt automatisch den Trainingstyp (Mo=Glute, Mi=Shape, Fr=Volume, Di/Do/Sa=Mobility)</div><div style="display:flex;gap:8px;align-items:center"><select id="retro-day" style="flex:1">'+retroOpts+'</select><button class="btn btn-ghost" style="width:auto;padding:10px 14px;font-size:13px;white-space:nowrap" onclick="retroLog()">+ Eintragen</button></div></div></div>';
+  // Daily card
+  var dayOfYear=Math.floor((today-new Date(today.getFullYear(),0,0))/86400000);
+  var card=DAILY_CARDS[dayOfYear%DAILY_CARDS.length];
+  var isVerse=card.ref.indexOf('Korinther')>-1||card.ref.indexOf('Timotheus')>-1||card.ref.indexOf('Kolosser')>-1||card.ref.indexOf('Philipper')>-1||card.ref.indexOf('Sprüche')>-1||card.ref.indexOf('Psalm')>-1||card.ref.indexOf('Josua')>-1;
+  var cardHtml='<div class="block-gap"></div><div style="padding:0 24px 12px"><div style="background:#1A1614;border:1px solid #3A2E24;border-radius:14px;padding:20px 20px"><div style="font-size:10px;letter-spacing:2px;color:#C4A882;text-transform:uppercase;font-family:-apple-system,system-ui,sans-serif;margin-bottom:8px">'+(isVerse?'Bibelvers des Tages':'Wusstest du?')+'</div><div style="font-size:14px;color:#E8DDD0;line-height:1.6;font-style:'+(isVerse?'italic':'normal')+';">'+card.text+'</div><div style="font-size:11px;color:#8A8078;font-family:-apple-system,system-ui,sans-serif;margin-top:8px">'+card.ref+'</div></div></div>';
 
-  document.getElementById('plan-content').innerHTML=strip+studioHtml+mainHtml+retroHtml;
+  var retroHtml='<div class="block-gap"></div><div style="padding:0 24px 20px"><div class=\"block-title\">Training nachträglich eintragen</div><div class="card" style="padding:12px 14px"><div style="font-size:11px;color:#8A8078;font-family:-apple-system,system-ui,sans-serif;margin-bottom:8px">Wochentag bestimmt automatisch den Trainingstyp (Mo=Glute, Mi=Shape, Fr=Volume, Di/Do/Sa=Mobility)</div><div style="display:flex;gap:8px;align-items:center"><select id="retro-day" style="flex:1">'+retroOpts+'</select><button class="btn btn-ghost" style="width:auto;padding:10px 14px;font-size:13px;white-space:nowrap" onclick="retroLog()">+ Eintragen</button></div></div></div>';
+
+  document.getElementById('plan-content').innerHTML=strip+studioHtml+mainHtml+cardHtml+retroHtml;
+  // Set week label
+  var wlEl=document.getElementById('week-label');
+  if(wlEl){
+    var wNum=getWeekNumber(today);
+    var wsStr=ws.toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit'});
+    var weD=new Date(ws);weD.setDate(ws.getDate()+6);
+    var weStr=weD.toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit'});
+    wlEl.textContent='KW '+wNum+' · '+wsStr+' – '+weStr;
+  }
 }
 
 function setStudio(id){DB.set('activeStudio',id);renderPlan();}
@@ -483,11 +518,47 @@ function retroLog(){
 // ---- RENDER WORKOUT ----
 function renderWorkout(){
   if(!WS.active){
-    var html='<div class="pad"><h2 style="font-size:20px;font-weight:300;color:#E8DDD0;margin-bottom:16px">Training starten</h2>';
+    // Check if a day is pre-selected for preview
+    var previewDay=WS.previewDay||null;
+    var today2=new Date();var dow2=today2.getDay();
+    var todayWO={1:'monday',3:'wednesday',5:'friday'}[dow2]||null;
+    var html='<div class="pad">';
+    // Week number
+    var wNum2=getWeekNumber(today2);
+    html+='<div class="block-title" style="margin-bottom:12px">KW '+wNum2+' · '+today2.toLocaleDateString('de-DE',{weekday:'long',day:'2-digit',month:'long'})+'</div>';
+    // Active workout warning
+    if(WS._savedState){
+      html+='<div style="background:#2A1A0A;border:1px solid #6A4A1A;border-radius:12px;padding:14px 16px;margin-bottom:12px"><div style="font-size:13px;color:#C4A050;font-family:-apple-system,system-ui,sans-serif;margin-bottom:8px">⚠️ Du hast ein offenes Training vom '+WS._savedState.date+'</div><div style="display:flex;gap:8px"><button class="btn btn-primary" style="font-size:12px;padding:9px" onclick="resumeWorkout()">Weiterführen</button><button class="btn btn-danger" style="font-size:12px;padding:9px" onclick="discardWorkout()">Verwerfen</button></div></div>';
+    }
     var keys=Object.keys(TEMPLATES);
     for(var i=0;i<keys.length;i++){
       var k=keys[i];var t=TEMPLATES[k];
-      html+='<div class="card" style="display:flex;justify-content:space-between;align-items:center;cursor:pointer;margin-bottom:8px" onclick="startWorkout(\''+k+'\',\''+getActiveStudio()+'\')"><div><div style="font-size:15px;color:#E8DDD0">'+t.emoji+' '+t.label+'</div><div style="font-size:12px;color:#8A8078;font-family:-apple-system,system-ui,sans-serif">'+t.focus+'</div></div><span style="color:#C4A882;font-size:20px">›</span></div>';
+      var isTodayWO=k===todayWO;
+      var sessD=DB.get('sessions.'+DB.today(),null);
+      var isDoneToday2=sessD&&sessD.done&&sessD.day===k;
+      var isOpen=previewDay===k;
+      var bc=isTodayWO?'#C4A88250':'#2E2E2E';
+      html+='<div class="card" style="border-color:'+bc+';margin-bottom:14px;" onclick="toggleDayPreview(\''+k+'\')"><div style="display:flex;justify-content:space-between;align-items:center">';
+      html+='<div><div style="font-size:15px;color:#E8DDD0">'+t.emoji+' '+t.label+'<span style="font-size:12px;color:#8A8078;font-family:-apple-system,system-ui,sans-serif;margin-left:6px">'+t.focus+'</span></div>';
+      if(isTodayWO)html+='<div style="font-size:10px;color:#C4A882;font-family:-apple-system,system-ui,sans-serif;margin-top:2px">Heute</div>';
+      else if(isDoneToday2)html+='<div style="font-size:10px;color:#60C060;font-family:-apple-system,system-ui,sans-serif;margin-top:2px">&#10003; Erledigt</div>';
+      html+='</div><span style="color:#C4A882;font-size:16px">'+(isOpen?'&#9650;':'&#9660;')+'</span></div>';
+      if(isOpen){
+        var tmpl2=TEMPLATES[k];var slotList=tmpl2.slots;
+        html+='<div style="margin-top:12px;border-top:1px solid #2E2E2E;padding-top:12px">';
+        for(var si2=0;si2<slotList.length;si2++){
+          var sl2=slotList[si2];if(!sl2.sets&&!sl2.duration)continue;
+          var exN2=bestEx(sl2.slot,getActiveStudio());
+          html+='<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #1A1A1A;font-size:13px;font-family:-apple-system,system-ui,sans-serif">';
+          html+='<span style="color:#C8C0B8">'+exN2+'</span>';
+          html+='<span style="color:#5A5450">'+(sl2.sets?sl2.sets+'x'+sl2.reps:sl2.duration||'')+'</span></div>';
+        }
+        html+='<div style="display:flex;gap:8px;margin-top:12px;align-items:center">';
+        html+='<button class="btn btn-primary" style="font-size:14px;flex:1" onclick="event.stopPropagation();beginWorkout(\''+k+'\')">'+( isDoneToday2?'Nochmal':'Los geht\'s')+'</button>';
+        html+='<button style="width:44px;height:44px;border-radius:10px;border:1px solid #5A3A3A;background:#2A1A1A;color:#C08080;font-size:18px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center" onclick="event.stopPropagation();deleteSession(\''+k+'\')" title="Loeschen">&#128465;</button>';
+        html+='</div></div>';
+      }
+      html+='</div>';
     }
     html+='</div>';
     document.getElementById('workout-content').innerHTML=html;
@@ -565,7 +636,16 @@ function renderWorkout(){
     if(slot.note)html+='<div class="note-box">'+slot.note+'</div>';
 
     // Technique
-    var hw=slotDef&&slotDef.howto&&slotDef.howto[exName]?slotDef.howto[exName]:'';
+    var hw='';
+  if(slotDef&&slotDef.howto){
+    if(slotDef.howto[exName]){
+      hw=slotDef.howto[exName];
+    }else{
+      // Fallback: use default exercise howto
+      var defHw=slotDef.howto[slotDef.def];
+      if(defHw)hw='(Anleitung für '+slotDef.def+') '+defHw;
+    }
+  }
     if(hw){
       html+='<button class="btn btn-ghost" style="margin-top:8px;font-size:12px;padding:10px" onclick="toggleHowto()">Ausführung anzeigen</button>';
       html+='<div id="howto-box" class="howto-box"><div class="howto-text">'+hw+'</div></div>';
@@ -604,8 +684,54 @@ function renderWorkout(){
   document.getElementById('workout-content').innerHTML=html;
 }
 
+function toggleDayPreview(day){
+  WS.previewDay=(WS.previewDay===day?null:day);
+  renderWorkout();
+}
+
+function beginWorkout(day){
+  // Block starting new workout if one is already active/saved
+  if(WS._savedState){
+    toast('Bitte erst offenes Training beenden oder verwerfen',true);
+    return;
+  }
+  startWorkout(day,getActiveStudio());
+}
+
+function resumeWorkout(){
+  if(WS._savedState){
+    var s=WS._savedState;
+    WS={active:true,day:s.day,studio:s.studio,idx:s.idx,sets:s.sets,subs:s.subs,skipped:s.skipped,deferred:s.deferred,startTime:s.startTime,previewDay:null};
+    WS._savedState=null;
+    PS={};
+    renderWorkout();
+  }
+}
+
+function discardWorkout(){
+  WS._savedState=null;
+  WS.previewDay=null;
+  renderWorkout();
+  toast('Training verworfen');
+}
+
+function deleteSession(day){
+  var today=DB.today();
+  var sess=DB.get('sessions.'+today,null);
+  if(sess&&sess.day===day){
+    var d=DB.load();
+    if(d.sessions)delete d.sessions[today];
+    DB.save(d);
+    toast('Training gelöscht');
+    renderWorkout();
+    renderPlan();
+  } else {
+    toast('Kein Training für heute gefunden',true);
+  }
+}
+
 function startWorkout(day,studioId){
-  WS={active:true,day:day,studio:studioId,idx:0,sets:{},subs:{},skipped:[],deferred:[],startTime:Date.now()};
+  WS={active:true,day:day,studio:studioId,idx:0,sets:{},subs:{},skipped:[],deferred:[],startTime:Date.now(),partial:{},_savedState:null,previewDay:null};
   PS={};
   NAV('workout');
 }
@@ -654,9 +780,10 @@ function logSet(){
 function removeSet(si){if(WS.sets[WS.idx])WS.sets[WS.idx].splice(si,1);renderWorkout();}
 
 function finishSetsEarly(){
-  // Complete slot with however many sets were done
+  if(!WS.partial)WS.partial={};
+  WS.partial[WS.idx]=true;
   completeSlot();
-  toast('Übung abgeschlossen');
+  toast('Übung mit weniger Sätzen abgeschlossen');
 }
 
 function completeSlot(){
@@ -683,9 +810,11 @@ function showWOOverview(){
     var isSkipped=WS.skipped.indexOf(i)>-1;
     var isCurrent=i===WS.idx;
     var isDone=sets.length>0&&(!sl.sets||sets.length>=sl.sets);
-    var bg=isSkipped?'#2A1A1A':isDone?'#0A1A0A':isCurrent?'#1A1A2A':'#1E1E1E';
-    var bc=isSkipped?'#5A3A3A':isDone?'#2A5A2A':isCurrent?'#3A3A6A':'#2E2E2E';
-    var status=isSkipped?'Übersprungen':isDone?'✓ Fertig':isCurrent?'← Aktuell':'';
+    var isPartial2=WS.partial&&WS.partial[i];
+    var bg=isSkipped?'#2A1A1A':isDone?'#0A1A0A':isPartial2?'#1A1800':isCurrent?'#1A1A2A':'#1E1E1E';
+    var bc=isSkipped?'#5A3A3A':isDone?'#2A5A2A':isPartial2?'#4A4A00':isCurrent?'#3A3A6A':'#2E2E2E';
+    var isPartial=WS.partial&&WS.partial[i];
+    var status=isSkipped?'Übersprungen':isDone?'✓ Fertig':isPartial?'~ Teilweise':isCurrent?'← Aktuell':'';
     var sStr='';if(sets.length){for(var si=0;si<sets.length;si++)sStr+=(si?'  ':'')+sets[si].weight+'kg×'+sets[si].reps;}
     html+='<div style="background:'+bg+';border:1px solid '+bc+';border-radius:12px;padding:12px 14px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;cursor:'+(isCurrent?'default':'pointer')+'" onclick="'+(isCurrent?'':'goToSlot('+i+')"')+'"><div><div style="font-size:13px;color:#E8DDD0;font-family:-apple-system,system-ui,sans-serif">'+exN+'</div>'+(sl.sets?'<div style="font-size:11px;color:#8A8078;font-family:-apple-system,system-ui,sans-serif;margin-top:2px">'+(sStr||sl.sets+'×'+sl.reps+' geplant')+'</div>':'<div style="font-size:11px;color:#8A8078;font-family:-apple-system,system-ui,sans-serif;margin-top:2px">'+(sl.duration||'')+'</div>')+'</div><div style="font-size:11px;color:'+(isDone?'#60C060':isSkipped?'#C06060':isCurrent?'#8080C0':'#5A5450')+';font-family:-apple-system,system-ui,sans-serif">'+status+'</div></div>';
   }
@@ -733,7 +862,7 @@ function renderMob(){
   var mobKeys=['tuesday','thursday','saturday'];
   for(var mi=0;mi<mobKeys.length;mi++){
     var key=mobKeys[mi];var mob=MOB[key];var isToday=key===todayKey;
-    html+='<div class="card" style="'+(isToday?'border-color:#5A5AAA;':'')+' margin-bottom:10px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><div><div style="font-size:14px;color:#E8DDD0">🧘 '+mob.label+'</div><div style="font-size:11px;color:#8A8078;font-family:-apple-system,system-ui,sans-serif">'+mob.focus+'</div></div>'+(isToday?'<span style="font-size:10px;color:#8080C0;font-family:-apple-system,system-ui,sans-serif;background:#1A1A2A;padding:3px 8px;border-radius:6px">Heute</span>':'')+'</div>';
+    html+='<div class="card" style="'+(isToday?'border-color:#5A5AAA;':'')+' margin-bottom:10px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><div><div style="font-size:14px;color:#E8DDD0">🧘🏾 '+mob.label+'</div><div style="font-size:11px;color:#8A8078;font-family:-apple-system,system-ui,sans-serif">'+mob.focus+'</div></div>'+(isToday?'<span style="font-size:10px;color:#8080C0;font-family:-apple-system,system-ui,sans-serif;background:#1A1A2A;padding:3px 8px;border-radius:6px">Heute</span>':'')+'</div>';
     for(var ei=0;ei<mob.exercises.length;ei++){
       var ex=mob.exercises[ei];
       html+='<div class="mob-ex"><div style="flex:1"><div style="font-size:13px;color:#C8C0B8;font-family:-apple-system,system-ui,sans-serif">'+ex.name+'</div><div style="font-size:11px;color:#8A8078;font-family:-apple-system,system-ui,sans-serif">'+ex.detail+'</div></div><button onclick="showMobInfo(\''+ex.name.replace(/'/g,"\\'")+'\')" style="font-size:11px;color:#8080C0;font-family:-apple-system,system-ui,sans-serif;padding:5px 10px;border:1px solid #3A3A6A;border-radius:7px;background:#1A1A2A;flex-shrink:0;margin-left:8px">Info</button></div>';
@@ -876,7 +1005,7 @@ function renderStats(){
   htData.sort(function(a,b){return a.date>b.date?1:-1;});
   if(htData.length>0){
     var htW=htData.map(function(h){return Math.max.apply(null,h.sets.map(function(s){return s.weight||0;}));}).filter(function(w){return w>0;});
-    html+='<div class="card"><div style="font-size:12px;color:#C4A882;font-family:-apple-system,system-ui,sans-serif;margin-bottom:6px">Hip Thrust Max-Gewicht (kg)</div>'+renderBars(htW.slice(-8),'#C4A882',htData.slice(-8).map(function(h){return h.date?h.date.slice(5):'';}),'')+'</div>';
+    html+='<div class="card"><div style="font-size:12px;color:#C4A882;font-family:-apple-system,system-ui,sans-serif;margin-bottom:2px">Hip Thrust -- höchstes Gewicht pro Einheit (kg)</div><div style="font-size:11px;color:#5A5450;font-family:-apple-system,system-ui,sans-serif;margin-bottom:8px">Jeder Balken = eine Trainingseinheit. Höchster Balken = persönliches Maximum.</div>'+renderBars(htW.slice(-8),'#C4A882',htData.slice(-8).map(function(h){return h.date?h.date.slice(5):'';}),'kg')+'</div>';
   }
 
   // Body
@@ -1097,7 +1226,7 @@ function addStudio(){
   var name=document.getElementById('new_s_name')&&document.getElementById('new_s_name').value.trim();
   if(!name){toast('Name eingeben',true);return;}
   var studios=getStudios();var id='s_'+Date.now();
-  studios[id]={id:id,name:name,icon:'🏋️',eq:Object.keys(SLOTS)};
+  studios[id]={id:id,name:name,icon:'🏋🏾',eq:Object.keys(SLOTS)};
   DB.set('studios',studios);toast('Studio "'+name+'" hinzugefügt');renderMore();
 }
 
