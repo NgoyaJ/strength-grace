@@ -857,21 +857,52 @@ function renderMob(){
   var sqDur=week<=2?30:week<=4?45:week<=8?60:90;
 
   var html='<div class="pad"><h2 style="font-size:20px;font-weight:300;color:#E8DDD0;margin-bottom:16px">Mobility</h2>';
-  html+='<div class="card" style="border-color:#3A3A6A;margin-bottom:14px"><div style="font-size:13px;color:#C0C0E0;margin-bottom:6px">Daily Deep Squat</div><div style="font-size:12px;color:#8080C0;font-family:-apple-system,system-ui,sans-serif;margin-bottom:10px">Heute: '+sqDur+' Sek</div><button class="btn btn-mob" id="ds-btn" onclick="startDSTimer('+sqDur+')">Timer starten ('+sqDur+'s)</button><button class="btn btn-ghost" style="margin-top:6px;font-size:12px;padding:8px" onclick="stopDSTimer()">Timer stoppen</button></div>';
+  var dsDoneToday=DB.get('dsDone.'+DB.today(),false);
+  if(!dsDoneToday){
+    html+='<div class="card" style="border-color:#3A3A6A;margin-bottom:14px"><div style="font-size:13px;color:#C0C0E0;margin-bottom:6px">Daily Deep Squat</div><div style="font-size:12px;color:#8080C0;font-family:-apple-system,system-ui,sans-serif;margin-bottom:10px">Heute: '+sqDur+' Sek</div><button class="btn btn-mob" id="ds-btn" onclick="startDSTimer('+sqDur+')">Timer starten ('+sqDur+'s)</button><button class="btn btn-ghost" style="margin-top:6px;font-size:12px;padding:8px" onclick="stopDSTimer()">Timer stoppen</button><button class="btn btn-success" style="margin-top:8px;font-size:13px" onclick="markDSDone()">&#10003; Deep Squat erledigt</button></div>';
+  }
 
   var mobKeys=['tuesday','thursday','saturday'];
   for(var mi=0;mi<mobKeys.length;mi++){
     var key=mobKeys[mi];var mob=MOB[key];var isToday=key===todayKey;
-    html+='<div class="card" style="'+(isToday?'border-color:#5A5AAA;':'')+' margin-bottom:10px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><div><div style="font-size:14px;color:#E8DDD0">🧘🏾 '+mob.label+'</div><div style="font-size:11px;color:#8A8078;font-family:-apple-system,system-ui,sans-serif">'+mob.focus+'</div></div>'+(isToday?'<span style="font-size:10px;color:#8080C0;font-family:-apple-system,system-ui,sans-serif;background:#1A1A2A;padding:3px 8px;border-radius:6px">Heute</span>':'')+'</div>';
+    // Check per-exercise done status
+    var exDone=DB.get('mobExDone.'+DB.today()+'.'+key,{});
+    var doneCount=Object.keys(exDone).filter(function(k){return exDone[k];}).length;
+    var totalEx=mob.exercises.length;
+    var allDone=doneCount===totalEx;
+    var sessionDone=DB.get('mobDone.'+DB.today()+'.'+key,false);
+    // Status badge
+    var statusBadge='';
+    if(allDone||sessionDone){
+      statusBadge='<span style="font-size:11px;color:#60C060;font-family:-apple-system,system-ui,sans-serif;background:#0A1A0A;padding:3px 9px;border-radius:6px">&#10003; Erledigt</span>';
+    } else if(doneCount>0){
+      statusBadge='<span style="font-size:11px;color:#C4A882;font-family:-apple-system,system-ui,sans-serif;background:#1A1400;padding:3px 9px;border-radius:6px">'+doneCount+'/'+totalEx+' gemacht</span>';
+    } else if(isToday){
+      statusBadge='<span style="font-size:11px;color:#8080C0;font-family:-apple-system,system-ui,sans-serif;background:#1A1A2A;padding:3px 9px;border-radius:6px">Heute</span>';
+    }
+    var bc=allDone||sessionDone?'border-color:#2A5A2A;':isToday?'border-color:#5A5AAA;':'';
+    html+='<div class="card" style="'+bc+' margin-bottom:10px">';
+    html+='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">';
+    html+='<div><div style="font-size:14px;color:#E8DDD0">🧘🏾 '+mob.label+'</div><div style="font-size:11px;color:#8A8078;font-family:-apple-system,system-ui,sans-serif">'+mob.focus+'</div></div>';
+    html+=statusBadge+'</div>';
     for(var ei=0;ei<mob.exercises.length;ei++){
       var ex=mob.exercises[ei];
-      html+='<div class="mob-ex"><div style="flex:1"><div style="font-size:13px;color:#C8C0B8;font-family:-apple-system,system-ui,sans-serif">'+ex.name+'</div><div style="font-size:11px;color:#8A8078;font-family:-apple-system,system-ui,sans-serif">'+ex.detail+'</div></div><button onclick="showMobInfo(\''+ex.name.replace(/'/g,"\\'")+'\')" style="font-size:11px;color:#8080C0;font-family:-apple-system,system-ui,sans-serif;padding:5px 10px;border:1px solid #3A3A6A;border-radius:7px;background:#1A1A2A;flex-shrink:0;margin-left:8px">Info</button></div>';
+      var exNameSafe=ex.name.replace(/'/g,'');
+      var isDoneEx=exDone[ei]||false;
+      html+='<div class="mob-ex" style="opacity:'+(isDoneEx?'0.5':'1')+'">';
+      html+='<div style="flex:1"><div style="font-size:13px;color:'+(isDoneEx?'#60C060':'#C8C0B8')+';font-family:-apple-system,system-ui,sans-serif;text-decoration:'+(isDoneEx?'line-through':'none')+'">'+(isDoneEx?'&#10003; ':'')+ex.name+'</div>';
+      html+='<div style="font-size:11px;color:#8A8078;font-family:-apple-system,system-ui,sans-serif">'+ex.detail+'</div></div>';
+      html+='<div style="display:flex;gap:6px;align-items:center">';
+      if(!isDoneEx){html+='<button onclick="markMobEx(\''+key+'\','+ei+')" style="font-size:11px;color:#60C060;font-family:-apple-system,system-ui,sans-serif;padding:5px 10px;border:1px solid #2A5A2A;border-radius:7px;background:#0A1A0A;flex-shrink:0;cursor:pointer">&#10003;</button>';}
+      html+='<button onclick="showMobInfo(\''+exNameSafe+'\')" style="font-size:11px;color:#8080C0;font-family:-apple-system,system-ui,sans-serif;padding:5px 10px;border:1px solid #3A3A6A;border-radius:7px;background:#1A1A2A;flex-shrink:0;cursor:pointer">Info</button>';
+      html+='</div></div>';
     }
-    if(isToday)html+='<button class="btn btn-mob" style="margin-top:10px" onclick="logMob(\''+key+'\')">Mobility erledigt</button>';
+    if(isToday&&!allDone&&!sessionDone){
+      html+='<button class="btn btn-mob" style="margin-top:10px" onclick="logMob(\''+key+'\')">Alle als erledigt markieren</button>';
+    }
     html+='</div>';
   }
-
-  // Measurements
+    // Measurements
   var meas=DB.get('mobMeas',[]);
   html+='<div class="card"><div style="font-size:13px;color:#E8DDD0;margin-bottom:12px">Alle 4 Wochen messen</div>';
   html+='<div class="lbl" style="margin-top:0">Front Split links (cm vom Boden)</div><input type="number" id="fs_l" placeholder="cm"><div class="lbl">Front Split rechts (cm)</div><input type="number" id="fs_r" placeholder="cm"><div class="lbl">Knee-to-Wall links (cm)</div><input type="number" id="ktw_l" placeholder="cm"><div class="lbl">Knee-to-Wall rechts (cm)</div><input type="number" id="ktw_r" placeholder="cm"><div class="lbl">Deep Squat (Sek)</div><input type="number" id="ds_s" placeholder="Sek"><button class="btn btn-mob" style="margin-top:12px" onclick="saveMobMeas()">Messung speichern</button></div>';
@@ -885,6 +916,13 @@ function renderMob(){
 
   // Info panel placeholder
   document.getElementById('mob-content').insertAdjacentHTML('beforeend','<div id="mob-info-panel" style="display:none;position:fixed;bottom:80px;left:50%;transform:translateX(-50%);width:90%;max-width:420px;background:#1E1E1E;border:1px solid #3A3A6A;border-radius:16px;padding:18px;z-index:150"><div id="mob-info-title" style="font-size:15px;color:#E8DDD0;margin-bottom:8px"></div><div id="mob-info-how" style="font-size:13px;color:#C8C0B8;font-family:-apple-system,system-ui,sans-serif;line-height:1.6;margin-bottom:8px"></div><div id="mob-info-tip" style="font-size:12px;color:#8A8078;font-family:-apple-system,system-ui,sans-serif"></div><button class="btn btn-ghost" style="margin-top:10px;font-size:12px;padding:8px" onclick="document.getElementById(\'mob-info-panel\').style.display=\'none\'">Schließen</button></div>');
+}
+
+function markDSDone(){
+  if(_sqTimer){clearInterval(_sqTimer);_sqTimer=null;}
+  DB.set('dsDone.'+DB.today(),true);
+  toast('Deep Squat erledigt ✓');
+  renderMob();
 }
 
 function stopDSTimer(){
@@ -907,8 +945,26 @@ function startDSTimer(sek){
       var b2=document.getElementById('ds-btn');
       if(b2){b2.textContent='Fertig! Gut gemacht';b2.style.background='#1A2A1A';b2.style.borderColor='#3A5A3A';b2.style.color='#80C080';}
       toast('Deep Squat fertig -- '+sek+'s');
+      setTimeout(function(){markDSDone();},1500);
     }
   },1000);
+}
+
+function markMobEx(key,idx){
+  var exDone=DB.get('mobExDone.'+DB.today()+'.'+key,{});
+  exDone[idx]=true;
+  DB.set('mobExDone.'+DB.today()+'.'+key,exDone);
+  // Auto-complete session if all done
+  var mob=MOB[key];
+  if(mob){
+    var allDone=true;
+    for(var i=0;i<mob.exercises.length;i++){if(!exDone[i]){allDone=false;break;}}
+    if(allDone){
+      DB.set('mobDone.'+DB.today()+'.'+key,true);
+      toast('Alle Übungen erledigt ✓');
+    }
+  }
+  renderMob();
 }
 
 function logMob(key){
