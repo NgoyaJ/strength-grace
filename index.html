@@ -181,8 +181,8 @@ var SLOTS={
     'Booty Builder 3D Multi Abductor':'Dreidimensionaler Widerstand. Bewegung wie Abduktion, zusaetzliche Rotationskomponente. Tip: Geringeres Gewicht als normale Maschine. Trifft Gluteus Medius aus mehreren Winkeln.',
     'Standing Cable Hip Abduction':'Kabel auf Knöchelhoehe. Bein seitlich nach außen. Kontrolliert zurück. Tip: Kleine Bewegung. Hüfte stabil.'}
   },
-  GLUTE_ISO:{label:'Glute Isolation',color:'#C09060',def:'Cable Kickback diagonal',
-    alts:['Cable Kickback gerade','Booty Builder Pendulum Kickback','Booty Builder Kneeling Glute Isolator','Band Kickback'],
+  GLUTE_ISO:{label:'Glute Isolation',color:'#C09060',def:'Booty Builder Pendulum Kickback',
+    alts:['Cable Kickback diagonal','Cable Kickback gerade','Booty Builder Kneeling Glute Isolator','Band Kickback'],
     howto:{'Cable Kickback diagonal':'Kabel, Schlaufe um Knöchel. Leicht nach vorn gebeugt. Bein diagonal nach hinten-oben. Po anspannen. Tip: Diagonal trifft obere + seitliche Fasern. Hüfte nicht kippen.',
     'Cable Kickback gerade':'Wie diagonal, aber gerade nach hinten. Tip: Trifft Gluteus Maximus zentral. Gut für Freitag.',
     'Booty Builder Pendulum Kickback':'Knie auf Pad. Pendelmechanik. Po am höchsten Punkt maximal anspannen. Tip: Bessere Exzentrik als normaler Kickback.',
@@ -222,6 +222,13 @@ var SLOTS={
   CHEST_PRESS:{label:'Chest Press',color:'#807090',def:'Incline Chest Press Maschine',
     alts:['Dumbbell Incline Press'],
     howto:{'Incline Chest Press Maschine':'Rückenlehne 30-45°. Kontrolliert drücken. Langsam zurück. Tip: Schulterblatt zusammen und in Lehne. Schutzt Schultern.'}
+  },
+  PECTORAL:{label:'Pectoral',color:'#807090',def:'Pectoral Maschine',
+    alts:['Cable Crossover'],
+    howto:{
+      'Pectoral Maschine':'Aufrecht sitzen, Rücken an Lehne. Arme auf die Pads (nicht zu weit nach hinten). Kontrolliert nach innen zusammenführen. 1 Sek halten. Langsam öffnen — nicht bis zur maximalen Dehnung. Tip: Schulterblätter in Lehne drücken und dort lassen. Schultern nicht hochziehen.',
+      'Cable Crossover':'Kabel oben. Hände zur Körpermitte führen, leicht nach unten. Tip: Körper leicht nach vorn geneigt. Brust zusammenziehen.'
+    }
   },
   LATERAL:{label:'Lateral Raise',color:'#907080',def:'Dumbbell Lateral Raise',
     alts:['Cable Lateral Raise'],
@@ -270,14 +277,15 @@ var WARMUPS={
   ]},
   wednesday:{label:'Warm-Up Mittwoch',duration:'6-8 Min',exercises:[
     {name:'Laufband / Fahrrad',detail:'3 Min locker',how:'Körpertemperatur erhöhen. Locker, kein Cardio-Training.',tip:''},
-    {name:'Ankle Rocks',detail:'10/Seite',how:'Ferse unten, Knie kontrolliert nach vorne über die Zehen.',tip:'Vorbereitung für Belt Squat und Step-ups.'},
+    {name:'Ankle Rocks',detail:'10/Seite',how:'Ferse unten, Knie kontrolliert nach vorne über die Zehen.',tip:'Vorbereitung für Belt Squat.'},
     {name:'90/90 Hip Switch',detail:'8/Seite',how:'Sitzend, kontrollierte Hüftrotation.',tip:''},
     {name:'Bodyweight Deep Squat',detail:'5 Wdh · 2-3 Sek unten',how:'Fuß komplett am Boden, Knie folgen den Zehen. Unten kurz halten.',tip:''},
-    {name:'Wall Slides',detail:'8 Wdh',how:'Rücken an die Wand, Rippen nicht nach vorne schieben. Arme kontrolliert nach oben und wieder herunterführen, nur so weit wie sauber möglich.',tip:'Schulterblatt- und Brustkorbvorbereitung vor Pulldown, Row und Chest Press.'},
-    {name:'Bodyweight Step-up',detail:'5/Seite',how:'Niedrige Stufe. Über den ganzen Fuß des Arbeitsbeins hochdrücken — nicht vom hinteren Bein abstoßen.',tip:'Vorbereitung für Step-ups.'}
+    {name:'Wall Slides',detail:'8 Wdh',how:'Rücken an die Wand, Rippen nicht nach vorne schieben. Arme kontrolliert nach oben und wieder herunterführen, nur so weit wie sauber möglich.',tip:'Schulterblatt- und Brustkorbvorbereitung vor Pulldown, Row und Pectoral.'},
+    {name:'Arm Circles',detail:'10 vor + 10 rück',how:'Arme seitlich ausgestreckt. Kleine Kreise werden langsam größer. Dann Richtung wechseln.',tip:'Schultergelenk mobilisieren vor Pectoral Maschine.'}
   ],
   warmupSets:[
-    {exercise:'Belt Squat',sets:'2 Aufwärmsätze',note:'Aufwärmsatz 1: ca. 30-40% des Arbeitsgewichts × 8 Wdh. Aufwärmsatz 2: ca. 60% × 4-6 Wdh. Dann Arbeitssätze 3×8-12.'}
+    {exercise:'Belt Squat',sets:'2 Aufwärmsätze',note:'Aufwärmsatz 1: ca. 30-40% des Arbeitsgewichts × 8 Wdh. Aufwärmsatz 2: ca. 60% × 4-6 Wdh. Dann Arbeitssätze 3×8-12.'},
+    {exercise:'Pectoral',sets:'1 Aufwärmsatz',note:'Ca. 40-50% des Arbeitsgewichts × 10 Wdh. Schultern lockerhalten. Dann 2 Arbeitssätze × 10-15.'}
   ]},
   friday:{label:'Warm-Up Freitag',duration:'6-8 Min',exercises:[
     {name:'Laufband / Fahrrad',detail:'3 Min locker',how:'Körpertemperatur erhöhen. Locker, kein Cardio-Training.',tip:''},
@@ -308,12 +316,11 @@ var TEMPLATES={
   wednesday:{label:'Mittwoch',emoji:'💪🏾',focus:'Shape + Upper',color:'#9A8A7A',
     slots:[
       {slot:'SQUAT',sets:3,reps:'8-12',rir:'1-2',note:'Füße schulterbreit, tief gehen'},
-      {slot:'STEP_UP',sets:2,reps:'8-12',rir:'1-2'},
+      {slot:'GLUTE_ISO',sets:2,reps:'10-15',rir:'2-3',note:'Pendulum Kickback bevorzugt — Rücken beobachten'},
       {slot:'HIP_ABDUCTION',sets:3,reps:'12-20',rir:'1-2'},
       {slot:'LAT_PULL',sets:2,reps:'6-10',rir:'1-2'},
       {slot:'CABLE_ROW',sets:2,reps:'8-12',rir:'1-2'},
-      {slot:'CHEST_PRESS',sets:2,reps:'6-10',rir:'1-2'},
-      {slot:'LATERAL',sets:2,reps:'10-15',rir:'1-2'},
+      {slot:'PECTORAL',sets:2,reps:'10-15',rir:'2-3',note:'Pectoral Maschine — Schultern unten lassen'},
       {slot:'CORE',sets:2,reps:'8-12',rir:'-',note:'Dead Bug'},
       {slot:'IMPACT',note:'Wo 1-2: 3x20s -> steigern'}
     ]
@@ -859,18 +866,38 @@ function renderWorkout(){
       for(var wi2=0;wi2<wu2.exercises.length;wi2++){
         var wex2=wu2.exercises[wi2];
         var isWDone=wuDoneData['ex'+wi2];
-        html+='<div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid #1A2A1A">';
+        var wuInfoId='wuinfo_'+wi2;
+        html+='<div style="padding:6px 0;border-bottom:1px solid #1A2A1A">';
+        html+='<div style="display:flex;align-items:center;gap:8px">';
         html+='<button onclick="checkWU(\'ex'+wi2+'\')" style="width:26px;height:26px;border-radius:6px;border:1px solid '+(isWDone?'#3A6A3A':'#2A3A2A')+';background:'+(isWDone?'#1A4A1A':'#0A1A0A')+';color:#80C080;font-size:14px;cursor:pointer;flex-shrink:0">'+(isWDone?'&#10003;':'')+'</button>';
-        html+='<div><div style="font-size:13px;color:'+(isWDone?'#5A8050':'#C8D8C8')+';font-family:-apple-system,system-ui,sans-serif;text-decoration:'+(isWDone?'line-through':'none')+'">'+(isWDone?'&#10003; ':'')+wex2.name+'</div><div style="font-size:11px;color:#5A7A5A;font-family:-apple-system,system-ui,sans-serif">'+wex2.detail+'</div></div></div>';
+        html+='<div style="flex:1">';
+        html+='<div style="font-size:13px;color:'+(isWDone?'#5A8050':'#C8D8C8')+';font-family:-apple-system,system-ui,sans-serif;text-decoration:'+(isWDone?'line-through':'none')+'">'+(isWDone?'&#10003; ':'')+wex2.name+'</div>';
+        html+='<div style="font-size:11px;color:#5A7A5A;font-family:-apple-system,system-ui,sans-serif">'+wex2.detail+'</div>';
+        html+='</div>';
+        if(wex2.how){
+          html+='<button onclick="var el=document.getElementById(\''+wuInfoId+'\');el.style.display=el.style.display===\'none\'?\'\':\'none\'" style="font-size:11px;color:#4A7A4A;font-family:-apple-system,system-ui,sans-serif;padding:3px 8px;border:1px solid #2A4A2A;border-radius:6px;background:#0A150A;flex-shrink:0;cursor:pointer">Anleitung</button>';
+        }
+        html+='</div>';
+        if(wex2.how){
+          html+='<div id="'+wuInfoId+'" style="display:none;margin-top:6px;padding:8px 10px;background:#0D180D;border-radius:8px;border-left:2px solid #2A5A2A">';
+          html+='<div style="font-size:12px;color:#90C090;font-family:-apple-system,system-ui,sans-serif;line-height:1.6">'+wex2.how+'</div>';
+          if(wex2.tip)html+='<div style="font-size:11px;color:#6A9A6A;font-family:-apple-system,system-ui,sans-serif;margin-top:4px;font-style:italic">Tipp: '+wex2.tip+'</div>';
+          html+='</div>';
+        }
+        html+='</div>';
       }
       if(wu2.warmupSets){
         html+='<div style="margin-top:8px;padding-top:8px;border-top:1px solid #1A3A1A">';
         html+='<div style="font-size:10px;letter-spacing:1px;color:#A0A060;text-transform:uppercase;font-family:-apple-system,system-ui,sans-serif;margin-bottom:4px">Aufwärmsätze (nicht in Statistik)</div>';
         for(var wsi2=0;wsi2<wu2.warmupSets.length;wsi2++){
           var ws2=wu2.warmupSets[wsi2];var isWSdone=wuDoneData['ws'+wsi2];
-          html+='<div style="display:flex;align-items:center;gap:8px;padding:5px 0">';
+          html+='<div style="padding:5px 0">';
+          html+='<div style="display:flex;align-items:center;gap:8px">';
           html+='<button onclick="checkWU(\'ws'+wsi2+'\')" style="width:26px;height:26px;border-radius:6px;border:1px solid '+(isWSdone?'#5A5A2A':'#3A3A1A')+';background:'+(isWSdone?'#2A2A0A':'#0A0A05')+';color:#C0C060;font-size:14px;cursor:pointer;flex-shrink:0">'+(isWSdone?'&#10003;':'')+'</button>';
-          html+='<div style="font-size:12px;color:'+(isWSdone?'#7A7A40':'#C8C880')+';font-family:-apple-system,system-ui,sans-serif;text-decoration:'+(isWSdone?'line-through':'none')+'">'+(isWSdone?'&#10003; ':'')+ws2.exercise+': '+ws2.sets+'</div></div>';
+          html+='<div style="font-size:12px;color:'+(isWSdone?'#7A7A40':'#C8C880')+';font-family:-apple-system,system-ui,sans-serif;text-decoration:'+(isWSdone?'line-through':'none')+'">'+(isWSdone?'&#10003; ':'')+ws2.exercise+': '+ws2.sets+'</div>';
+          html+='</div>';
+          if(ws2.note)html+='<div style="font-size:11px;color:#7A7A50;font-family:-apple-system,system-ui,sans-serif;margin-top:4px;padding-left:34px;line-height:1.5">'+ws2.note+'</div>';
+          html+='</div>';
         }
         html+='</div>';
       }
