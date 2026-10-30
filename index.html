@@ -300,15 +300,15 @@ var WARMUPS={
   ]}
 };
 
-// ---- TEMPLATES ----
+// ---- TEMPLATES A (Hypertrophy) ----
 var TEMPLATES={
   monday:{label:'Montag',emoji:'🍑',focus:'Glute Strength',color:'#C4A882',
     slots:[
-      {slot:'HIP_THRUST',sets:4,reps:'6-10',rir:'1-2'},
-      {slot:'HIP_HINGE',sets:3,reps:'8-12',rir:'1-2',note:'Bei LWS: Cable Pull-Through'},
-      {slot:'LEG_PRESS',sets:3,reps:'8-12',rir:'1-2',note:'Füße weit oben für Po-Fokus'},
+      {slot:'HIP_THRUST',sets:3,reps:'6-10',rir:'1-2'},
+      {slot:'LEG_CURL',sets:2,reps:'10-15',rir:'1-2'},
+      {slot:'HIP_HINGE',sets:3,reps:'8-10',rir:'1-2',note:'Bei LWS: Cable Pull-Through'},
       {slot:'HIP_ABDUCTION',sets:3,reps:'12-20',rir:'1-2'},
-      {slot:'GLUTE_ISO',sets:2,reps:'12-20',rir:'1-2',note:'Diagonale Variante'},
+      {slot:'LEG_PRESS',sets:2,reps:'10-12',rir:'1-2',note:'Füße weit oben für Po-Fokus'},
       {slot:'PALLOF',sets:2,reps:'10-12',rir:'-'},
       {slot:'ZONE2',duration:'10-15 Min'}
     ]
@@ -316,25 +316,56 @@ var TEMPLATES={
   wednesday:{label:'Mittwoch',emoji:'💪🏾',focus:'Shape + Upper',color:'#9A8A7A',
     slots:[
       {slot:'SQUAT',sets:3,reps:'8-12',rir:'1-2',note:'Füße schulterbreit, tief gehen'},
-      {slot:'GLUTE_ISO',sets:2,reps:'10-15',rir:'2-3',note:'Pendulum Kickback bevorzugt — Rücken beobachten'},
+      {slot:'LAT_PULL',sets:2,reps:'8-12',rir:'1-2'},
       {slot:'HIP_ABDUCTION',sets:3,reps:'12-20',rir:'1-2'},
-      {slot:'LAT_PULL',sets:2,reps:'6-10',rir:'1-2'},
       {slot:'CABLE_ROW',sets:2,reps:'8-12',rir:'1-2'},
-      {slot:'PECTORAL',sets:2,reps:'10-15',rir:'2-3',note:'Pectoral Maschine — Schultern unten lassen'},
+      {slot:'GLUTE_ISO',sets:2,reps:'10-12',rir:'2-3',note:'Pendulum Kickback'},
+      {slot:'PECTORAL',sets:2,reps:'10-15',rir:'2-3',note:'Schultern unten lassen'},
       {slot:'CORE',sets:2,reps:'8-12',rir:'-',note:'Dead Bug'},
       {slot:'IMPACT',note:'Wo 1-2: 3x20s -> steigern'}
     ]
   },
-  friday:{label:'Freitag',emoji:'✨',focus:'Glute Volume',color:'#B09080',
+  friday:{label:'Freitag',emoji:'✨',focus:'Glute Hypertrophy',color:'#B09080',
     slots:[
       {slot:'HIP_THRUST',sets:3,reps:'10-15',rir:'1-2',note:'Etwas leichter als Mo'},
-      {slot:'LUNGE',sets:3,reps:'8-12',rir:'1-2'},
       {slot:'LEG_CURL',sets:3,reps:'10-15',rir:'1-2'},
+      {slot:'GLUTE_ISO',sets:2,reps:'12-20',rir:'1-2',note:'Pendulum Kickback'},
       {slot:'HIP_ABDUCTION',sets:3,reps:'15-25',rir:'1-2'},
-      {slot:'GLUTE_ISO',sets:2,reps:'12-20',rir:'1-2',note:'Gerade Hüftstreckung'},
       {slot:'CORE',sets:2,reps:'8-10',rir:'-',note:'Bird Dog'},
-      {slot:'PALLOF',sets:2,reps:'10-12',rir:'-'},
       {slot:'ZONE2',duration:'10-20 Min'}
+    ]
+  }
+};
+
+// ---- TEMPLATES B (Back Friendly) ----
+var TEMPLATES_B={
+  monday:{label:'Montag B',emoji:'🍑',focus:'Glute Strength Light',color:'#A09878',
+    slots:[
+      {slot:'HIP_THRUST',sets:2,reps:'10-12',rir:'2-3',note:'Nur wenn schmerzfrei'},
+      {slot:'LEG_CURL',sets:2,reps:'12-15',rir:'2-3'},
+      {slot:'HIP_ABDUCTION',sets:2,reps:'15-20',rir:'2-3'},
+      {slot:'LEG_PRESS',sets:2,reps:'10-12',rir:'2-3',note:'Optional — erst bei guter Verträglichkeit'},
+      {slot:'CORE',sets:2,reps:'8-10',rir:'-',note:'Dead Bug oder Pallof Press'}
+    ]
+  },
+  wednesday:{label:'Mittwoch B',emoji:'💪🏾',focus:'Supported Strength',color:'#7A8A8A',
+    slots:[
+      {slot:'HIP_ABDUCTION',sets:2,reps:'15-20',rir:'2-3'},
+      {slot:'LAT_PULL',sets:2,reps:'10-12',rir:'2-3'},
+      {slot:'SQUAT',sets:2,reps:'10-12',rir:'2-3',note:'Optional — erst bei guter Verträglichkeit'},
+      {slot:'PECTORAL',sets:2,reps:'10-15',rir:'2-3'},
+      {slot:'GLUTE_ISO',sets:2,reps:'12-15',rir:'2-3',note:'Pendulum Kickback'},
+      {slot:'CABLE_ROW',sets:2,reps:'10-12',rir:'2-3',note:'Wenn Rücken stabil bleibt'},
+      {slot:'CORE',sets:2,reps:'8',rir:'-',note:'Dead Bug'}
+    ]
+  },
+  friday:{label:'Freitag B',emoji:'✨',focus:'Glute Isolation',color:'#907878',
+    slots:[
+      {slot:'HIP_ABDUCTION',sets:2,reps:'15-25',rir:'2-3'},
+      {slot:'LEG_CURL',sets:2,reps:'12-15',rir:'2-3'},
+      {slot:'HIP_THRUST',sets:2,reps:'12-15',rir:'2-3',note:'Optional — nur wenn schmerzfrei'},
+      {slot:'GLUTE_ISO',sets:2,reps:'12-15',rir:'2-3',note:'Pendulum Kickback oder Kneeling Glute Isolator'},
+      {slot:'CORE',sets:2,reps:'8',rir:'-',note:'Bird Dog'}
     ]
   }
 };
@@ -816,15 +847,46 @@ function renderWorkout(){
           }
           html+='</div>';
         }
-        for(var si2=0;si2<slotList.length;si2++){
-          var sl2=slotList[si2];if(!sl2.sets&&!sl2.duration)continue;
-          var exN2=bestEx(sl2.slot,getActiveStudio());
-          html+='<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #1A1A1A;font-size:13px;font-family:-apple-system,system-ui,sans-serif">';
-          html+='<span style="color:#C8C0B8">'+exN2+'</span>';
-          html+='<span style="color:#5A5450">'+(sl2.sets?sl2.sets+'x'+sl2.reps:sl2.duration||'')+'</span></div>';
+        // A/B/R Selector
+        var sessVariant=sessD?sessD.variant||'A':null;
+        var hasBplan=TEMPLATES_B[k]?true:false;
+        html+='<div style="margin-bottom:12px">';
+        html+='<div style="font-size:10px;letter-spacing:1px;color:#8A8078;text-transform:uppercase;font-family:-apple-system,system-ui,sans-serif;margin-bottom:6px">Variante wählen</div>';
+        html+='<div style="display:flex;gap:6px">';
+        var pvA=DB.get('planVariant.'+k,'A');
+        var aOn=pvA==='A';var bOn=pvA==='B';var rOn=pvA==='R';
+        html+='<button onclick="event.stopPropagation();setPlanVariant(\''+k+'\',\'A\')" style="flex:1;padding:10px 6px;border-radius:10px;font-size:12px;font-family:-apple-system,system-ui,sans-serif;border:1px solid '+(aOn?'#C4A882':'#C4A88240')+';background:'+(aOn?'#2A2018':'#141210')+';color:'+(aOn?'#C4A882':'#5A5040')+';text-align:center;cursor:pointer">';
+        html+='<div style="font-size:11px;font-weight:600">A</div><div style="font-size:10px;margin-top:2px">Hypertrophy</div></button>';
+        if(hasBplan){
+          html+='<button onclick="event.stopPropagation();setPlanVariant(\''+k+'\',\'B\')" style="flex:1;padding:10px 6px;border-radius:10px;font-size:12px;font-family:-apple-system,system-ui,sans-serif;border:1px solid '+(bOn?'#8AACAC':'#7A9A9A40')+';background:'+(bOn?'#121E1E':'#0A1212')+';color:'+(bOn?'#8AACAC':'#3A6060')+';text-align:center;cursor:pointer">';
+          html+='<div style="font-size:11px;font-weight:600">B</div><div style="font-size:10px;margin-top:2px">Back Friendly</div></button>';
+        }
+        html+='<button onclick="event.stopPropagation();setPlanVariant(\''+k+'\',\'R\')" style="flex:1;padding:10px 6px;border-radius:10px;font-size:12px;font-family:-apple-system,system-ui,sans-serif;border:1px solid '+(rOn?'#9A9A60':'#6A6A4040')+';background:'+(rOn?'#1A1A0A':'#0F0F08')+';color:'+(rOn?'#BABA80':'#4A4A30')+';text-align:center;cursor:pointer">';
+        html+='<div style="font-size:11px;font-weight:600">R</div><div style="font-size:10px;margin-top:2px">Recovery</div></button>';
+        html+='</div></div>';
+        // Übungsvorschau — abhängig von Variante
+        var curVariant=DB.get('planVariant.'+k,'A');
+        var previewTmpl=(curVariant==='B'&&hasBplan)?TEMPLATES_B[k]:TEMPLATES[k];
+        if(curVariant!=='R'){
+          for(var si2=0;si2<previewTmpl.slots.length;si2++){
+            var sl2=previewTmpl.slots[si2];if(!sl2.sets&&!sl2.duration)continue;
+            var exN2=bestEx(sl2.slot,getActiveStudio());
+            html+='<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #1A1A1A;font-size:13px;font-family:-apple-system,system-ui,sans-serif">';
+            html+='<span style="color:#C8C0B8">'+exN2+'</span>';
+            html+='<span style="color:#5A5450">'+(sl2.sets?sl2.sets+'x'+sl2.reps:sl2.duration||'')+'</span></div>';
+          }
+        } else {
+          html+='<div style="font-size:12px;color:#8A8050;font-family:-apple-system,system-ui,sans-serif;padding:10px 0;line-height:1.5">Recovery: Leichte Bewegung, Spaziergang oder einfach Ruhe. Kein Krafttraining heute.</div>';
+        }
+        if(curVariant==='B'&&hasBplan){
+          html+='<div style="margin-top:8px;padding:7px 10px;background:#121A1A;border:1px solid #2A4A4A;border-radius:8px;font-size:11px;color:#6A9A9A;font-family:-apple-system,system-ui,sans-serif;line-height:1.5">Plan B · Reduziertes Volumen. Nur wenn Bewegungen schmerzfrei möglich sind. Bei starken Beschwerden → R (Recovery).</div>';
         }
         html+='<div style="display:flex;gap:8px;margin-top:12px;align-items:center">';
-        html+='<button class="btn btn-primary" style="font-size:14px;flex:1" onclick="event.stopPropagation();beginWorkout(\''+k+'\')">'+( isDoneToday2?'Nochmal':'Los geht\'s')+'</button>';
+        if(curVariant!=='R'){
+          html+='<button class="btn btn-primary" style="font-size:14px;flex:1" onclick="event.stopPropagation();beginWorkout(\''+k+'\',\''+curVariant+'\')">'+(isDoneToday2?'Nochmal':'Los geht\'s')+'</button>';
+        } else {
+          html+='<button class="btn btn-ghost" style="font-size:13px;flex:1;color:#9A9A60;border-color:#4A4A30" onclick="event.stopPropagation();logRecovery(\''+k+'\')">Recovery eintragen</button>';
+        }
         html+='<button style="width:44px;height:44px;border-radius:10px;border:1px solid #5A3A3A;background:#2A1A1A;color:#C08080;font-size:18px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center" onclick="event.stopPropagation();deleteSession(\''+k+'\')" title="Loeschen">&#128465;</button>';
         html+='</div></div></div>';
         } // close else
@@ -836,7 +898,7 @@ function renderWorkout(){
     return;
   }
 
-  var tmpl=TEMPLATES[WS.day];
+  var tmpl=getActiveTemplate();
   if(WS.idx>=tmpl.slots.length){finishWorkout();return;}
   var slot=tmpl.slots[WS.idx];
   var slotDef=SLOTS[slot.slot];
@@ -929,7 +991,8 @@ function renderWorkout(){
     if(sets.length){
       html+='<div style="background:#1A1A1A;border-radius:10px;padding:8px 12px;margin-bottom:10px">';
       for(var si=0;si<sets.length;si++){
-        html+='<div class="set-logged"><span style="font-size:12px;color:#8A8078;font-family:-apple-system,system-ui,sans-serif;width:36px">S'+(si+1)+'</span><span style="font-size:14px;color:#80C080;font-family:-apple-system,system-ui,sans-serif;flex:1">'+(sets[si].weight||'--')+'kg x '+sets[si].reps+' <span style="font-size:11px;color:#5A8050">RIR '+sets[si].rir+'</span></span><button onclick="removeSet('+si+')" style="font-size:16px;color:#5A3030">x</button></div>';
+        var dispW=(slot.slot==='CORE')?'BW':(sets[si].weight||'--')+'kg';
+        html+='<div class="set-logged"><span style="font-size:12px;color:#8A8078;font-family:-apple-system,system-ui,sans-serif;width:36px">S'+(si+1)+'</span><span style="font-size:14px;color:#80C080;font-family:-apple-system,system-ui,sans-serif;flex:1">'+dispW+' x '+sets[si].reps+' <span style="font-size:11px;color:#5A8050">RIR '+sets[si].rir+'</span></span><button onclick="removeSet('+si+')" style="font-size:16px;color:#5A3030">x</button></div>';
       }
       html+='</div>';
     }
@@ -939,11 +1002,16 @@ function renderWorkout(){
       var curW=PS.weight!=null?PS.weight:(sets.length?sets[sets.length-1].weight:null);
       var rStr=slot.reps||'8-12';var rParts=rStr.split('-');var rMin=parseInt(rParts[0])||6;var rMax=parseInt(rParts[1]||rParts[0])||12;
       var repOpts=[];for(var r=Math.max(1,rMin-2);r<=rMax+3;r++)repOpts.push(r);
+      var isBodyweight=(slot.slot==='CORE');
       html+='<div style="background:#181616;border-radius:12px;padding:12px;margin-bottom:10px">';
       html+='<div class="lbl" style="margin-top:0">Satz '+sn+' von '+slot.sets+'</div>';
-      html+='<div class="lbl">Gewicht (kg)</div>';
-      html+='<div class="stepper-row"><button class="stepper-btn" onclick="adjW(-1)">-</button><div class="stepper-val" id="wval">'+(curW!=null?curW:'--')+'</div><button class="stepper-btn" onclick="adjW(1)">+</button><span class="stepper-unit">kg</span></div>';
-      html+='<div class="wq-row"><button class="wq-btn'+(curW===2.5?' on':'')+'" onclick="setW(2.5)">2.5</button><button class="wq-btn'+(curW===5?' on':'')+'" onclick="setW(5)">5</button><button class="wq-btn'+(curW===7.5?' on':'')+'" onclick="setW(7.5)">7.5</button><button class="wq-btn'+(curW===10?' on':'')+'" onclick="setW(10)">10</button></div>';
+      if(!isBodyweight){
+        html+='<div class="lbl">Gewicht (kg)</div>';
+        html+='<div class="stepper-row"><button class="stepper-btn" onclick="adjW(-1)">-</button><div class="stepper-val" id="wval">'+(curW!=null?curW:'--')+'</div><button class="stepper-btn" onclick="adjW(1)">+</button><span class="stepper-unit">kg</span></div>';
+        html+='<div class="wq-row"><button class="wq-btn'+(curW===2.5?' on':'')+'" onclick="setW(2.5)">2.5</button><button class="wq-btn'+(curW===5?' on':'')+'" onclick="setW(5)">5</button><button class="wq-btn'+(curW===7.5?' on':'')+'" onclick="setW(7.5)">7.5</button><button class="wq-btn'+(curW===10?' on':'')+'" onclick="setW(10)">10</button></div>';
+      }else{
+        html+='<div style="font-size:11px;color:#6A7A5A;font-family:-apple-system,system-ui,sans-serif;margin-bottom:8px;padding:6px 8px;background:#141A10;border-radius:8px">Körpergewicht — kein Gewicht nötig</div>';
+      }
       html+='<div class="lbl">Wiederholungen</div><div class="rep-row" id="rep-row">';
       for(var ri2=0;ri2<repOpts.length;ri2++){var rv=repOpts[ri2];html+='<button class="rc'+(PS.reps===rv?' on':'')+'" onclick="setReps('+rv+')" id="rc-'+rv+'">'+(PS.reps===rv?'<b>':'')+rv+(PS.reps===rv?'</b>':'')+'</button>';}
       html+='</div>';
@@ -1013,13 +1081,25 @@ function toggleDayPreview(day){
   renderWorkout();
 }
 
-function beginWorkout(day){
+function setPlanVariant(day,variant){
+  DB.set('planVariant.'+day,variant);
+  renderWorkout();
+}
+
+function logRecovery(day){
+  DB.set('sessions.'+DB.today(),{day:day,studio:getActiveStudio(),variant:'R',done:true,completion:0,actual:0,done_count:0,skipped:0,duration:0,recovery:true,ts:new Date().toISOString()});
+  toast('Recovery eingetragen ✓');
+  NAV('plan');
+}
+
+function beginWorkout(day,variant){
   // Block starting new workout if one is already active/saved
   if(WS._savedState){
     toast('Bitte erst offenes Training beenden oder verwerfen',true);
     return;
   }
-  startWorkout(day,getActiveStudio());
+  if(!variant)variant='A';
+  startWorkout(day,getActiveStudio(),variant);
 }
 
 function resumeWorkout(){
@@ -1151,12 +1231,18 @@ function deleteSession(day){
   }
 }
 
-function startWorkout(day,studioId){
+function startWorkout(day,studioId,variant){
   var savedWuChecked=DB.get('wuChecked.'+DB.today(),{});
   var savedWuDone=DB.get('wuDone.'+DB.today(),false);
-  WS={active:true,day:day,studio:studioId,idx:0,sets:{},subs:{},skipped:[],deferred:[],startTime:Date.now(),partial:{},_savedState:null,previewDay:null,wuChecked:savedWuChecked,wuDone:savedWuDone};
+  if(!variant)variant='A';
+  WS={active:true,day:day,studio:studioId,variant:variant,idx:0,sets:{},subs:{},skipped:[],deferred:[],startTime:Date.now(),partial:{},_savedState:null,previewDay:null,wuChecked:savedWuChecked,wuDone:savedWuDone};
   PS={};
   NAV('workout');
+}
+
+function getActiveTemplate(){
+  if(WS.variant==='B')return TEMPLATES_B[WS.day]||TEMPLATES[WS.day];
+  return TEMPLATES[WS.day];
 }
 function toggleHowto(){var b=document.getElementById('howto-box');if(b)b.classList.toggle('open');}
 function toggleAlt(){var p=document.getElementById('alt-panel');if(p)p.classList.toggle('open');}
@@ -1166,9 +1252,17 @@ function jumpTo(idx){WS.deferred=WS.deferred.filter(function(d){return d!==idx;}
 function prevSlot(){if(WS.idx>0){WS.idx--;PS={};renderWorkout();}}
 function skipSlot(){WS.skipped.push(WS.idx);WS.idx++;PS={};renderWorkout();}
 
+function getCableSlots(){return {CABLE_ROW:1,LAT_PULL:1,PALLOF:1,LAT_PULLDOWN:1};}
+function isCableSlot(){
+  var tmpl=getActiveTemplate();
+  if(!tmpl||!tmpl.slots||WS.idx==null)return false;
+  var sl=tmpl.slots[WS.idx];
+  return sl&&getCableSlots()[sl.slot];
+}
 function adjW(dir){
   var cur=PS.weight!=null?PS.weight:0;
-  var nw=Math.max(0,Math.round((cur+dir*5)*10)/10);
+  var step=isCableSlot()?2.5:5;
+  var nw=Math.max(0,Math.round((cur+dir*step)*10)/10);
   PS.weight=nw;
   var el=document.getElementById('wval');if(el)el.textContent=nw||'--';
   document.querySelectorAll('.wq-btn').forEach(function(b){b.classList.remove('on');});
@@ -1190,13 +1284,16 @@ function setRIR(r){
   var el=document.getElementById('rir-'+r);if(el)el.classList.add('on');
 }
 function logSet(){
-  if(PS.weight==null){toast('Gewicht eingeben',true);return;}
+  var tmpl2=getActiveTemplate();
+  var curSlot=tmpl2&&tmpl2.slots?tmpl2.slots[WS.idx]:null;
+  var bw=(curSlot&&curSlot.slot==='CORE');
+  if(!bw&&PS.weight==null){toast('Gewicht eingeben',true);return;}
   if(PS.reps==null){toast('Wiederholungen wählen',true);return;}
   if(PS.rir==null){toast('RIR wählen',true);return;}
   if(!WS.sets[WS.idx])WS.sets[WS.idx]=[];
-  WS.sets[WS.idx].push({weight:PS.weight,reps:PS.reps,rir:PS.rir});
+  WS.sets[WS.idx].push({weight:bw?0:PS.weight,reps:PS.reps,rir:PS.rir});
   PS={};
-  var slot=TEMPLATES[WS.day].slots[WS.idx];
+  var slot=getActiveTemplate().slots[WS.idx];
   if(WS.sets[WS.idx].length>=slot.sets){completeSlot();}
   else{renderWorkout();}
 }
@@ -1230,19 +1327,19 @@ function finishSetsEarly(){
 function completeSlot(){
   var sets=WS.sets[WS.idx];
   if(sets&&sets.length){
-    var sl=TEMPLATES[WS.day].slots[WS.idx];
+    var sl=getActiveTemplate().slots[WS.idx];
     var exN=WS.subs[WS.idx]||bestEx(sl.slot,WS.studio);
-    DB.push('hist.'+exN,{date:DB.today(),studio:WS.studio,sets:sets,slot:sl.slot,plannedEx:bestEx(sl.slot,WS.studio),perfEx:exN,subUsed:!!WS.subs[WS.idx]});
+    DB.push('hist.'+exN,{date:DB.today(),studio:WS.studio,variant:WS.variant||'A',sets:sets,slot:sl.slot,plannedEx:bestEx(sl.slot,WS.studio),perfEx:exN,subUsed:!!WS.subs[WS.idx]});
   }
   WS.idx++;
-  if(WS.idx>=TEMPLATES[WS.day].slots.length&&WS.deferred.length){WS.idx=WS.deferred[0];}
+  if(WS.idx>=getActiveTemplate().slots.length&&WS.deferred.length){WS.idx=WS.deferred[0];}
   PS={};
   renderWorkout();
 }
 
 function showWOOverview(){
   if(!WS.active)return;
-  var tmpl=TEMPLATES[WS.day];
+  var tmpl=getActiveTemplate();
   var html='<div style="position:fixed;top:0;left:0;right:0;bottom:0;background:#0F0F0FEE;z-index:300;overflow-y:auto;padding:20px"><div style="max-width:460px;margin:0 auto"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px"><div style="font-size:18px;color:#E8DDD0">Trainings-Übersicht</div><button onclick="closeOverview()" style="font-size:13px;color:#8A8078;font-family:-apple-system,system-ui,sans-serif;padding:7px 14px;border:1px solid #3A3A3A;border-radius:9px">Schließen</button></div>';
   for(var i=0;i<tmpl.slots.length;i++){
     var sl=tmpl.slots[i];var slDef=SLOTS[sl.slot];
@@ -1276,15 +1373,18 @@ function goToSlot(idx){
 
 function finishWorkout(){
   if(!WS.active)return;
-  var tmpl=TEMPLATES[WS.day];
-  var total=tmpl.slots.length;
+  var tmpl=getActiveTemplate();
+  // Only count slots that actually have sets (exclude ZONE2, IMPACT etc.)
+  var exerciseSlots=tmpl.slots.filter(function(s){return s.sets&&s.sets>0;});
+  var total=exerciseSlots.length;
   var done=Object.keys(WS.sets).filter(function(i){return WS.sets[i]&&WS.sets[i].length>0;}).length;
-  var skipped=WS.skipped.length;
-  var completion=Math.round(((done+skipped)/total)*100);
-  var actual=Math.round((done/total)*100);
-  DB.set('sessions.'+DB.today(),{day:WS.day,studio:WS.studio,done:true,completion:completion,actual:actual,done_count:done,skipped:skipped,duration:Math.round((Date.now()-WS.startTime)/60000),ts:new Date().toISOString()});
+  var skipped=WS.skipped.filter(function(i){var s=exerciseSlots[parseInt(i)];return s&&s.sets&&s.sets>0;}).length;
+  var completion=total>0?Math.round(((done+skipped)/total)*100):100;
+  var actual=total>0?Math.round((done/total)*100):100;
+  DB.set('sessions.'+DB.today(),{day:WS.day,studio:WS.studio,variant:WS.variant||'A',done:true,completion:completion,actual:actual,done_count:done,skipped:skipped,duration:Math.round((Date.now()-WS.startTime)/60000),ts:new Date().toISOString()});
   WS.active=false;
-  toast('Gespeichert: '+done+' Übungen / '+completion+'% abgeschlossen');
+  var vLabel=WS.variant==='B'?' (Plan B)':WS.variant==='R'?' (Recovery)':'';
+  toast('Gespeichert: '+done+' Übungen / '+completion+'%'+vLabel);
   NAV('plan');
 }
 
